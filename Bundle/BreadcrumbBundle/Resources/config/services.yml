@@ -1,0 +1,14 @@
+parameters:
+    bluegrass_blues.class: Bluegrass\Blues\Bundle\BreadcrumbBundle\Model\Breadcrumb
+    twig.extension.breadcrumb.class: Bluegrass\Blues\Bundle\BreadcrumbBundle\Extension\Twig\BreadcrumbExtension
+
+services:
+    bluegrass_breadcrumb:
+        class: %bluegrass_breadcrumb.class%
+        arguments:     []
+
+    twig.extension.breadcrumb:
+        class: %twig.extension.breadcrumb.class%
+        arguments:     []
+        tags:
+            - { name: twig.extension }
