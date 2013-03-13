@@ -20,3 +20,18 @@
     </script>
         
 {% endblock %}
+
+{% block viewState %}
+
+        <script type='text/javascript'>
+            
+            var bluegrass_blues_blues_viewstate_viewstate;
+            
+            {% autoescape false %}
+                
+                bluegrass_blues_blues_viewstate_viewstate = new Bluegrass.Blues.Blues.ViewState.ViewState('{{ viewState.vars.requestParamName }}', '{{ viewState.vars.data }}');
+
+            {% endautoescape %}
+        </script>
+        
+{% endblock %}

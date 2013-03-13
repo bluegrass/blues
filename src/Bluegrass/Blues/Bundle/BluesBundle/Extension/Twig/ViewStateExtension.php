@@ -30,6 +30,7 @@ class ViewStateExtension extends \Twig_Extension
             'viewstate_link' => new \Twig_Function_Method($this, 'renderViewStateLink', array('is_safe' => array('html'))),
             'viewstate_form_hidden' => new \Twig_Function_Method($this, 'renderViewStateHidden', array('is_safe' => array('html'))),
             'viewstate_redirect' => new \Twig_Function_Method($this, 'renderViewStateRedirect', array('is_safe' => array('html'))),
+            'viewstate_render' => new \Twig_Function_Method($this, 'renderViewState', array('is_safe' => array('html'))),
         );
     }
 
@@ -73,6 +74,20 @@ class ViewStateExtension extends \Twig_Extension
       
         return $html;
     }
+    
+    public function renderViewState($viewState)
+    {       
+        $html = $this->renderBlock(
+                                    'viewState', 
+                                    array(
+                                            'viewState' => $viewState,
+                                    ),
+                                    'BluegrassBluesBluesBundle:ViewState:viewState.html.twig'
+                            );
+      
+        return $html;
+    }
+    
 
     /**
      * Busca un bloque en un template.
@@ -91,7 +106,7 @@ class ViewStateExtension extends \Twig_Extension
         }
 
         return $result;
-    }
+    }        
 
     protected function getTemplate($theme)
     {
