@@ -13,5 +13,9 @@
             "name": "Lisandro Delía",
             "email": "lisandro.delia@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-0": { "Bluegrass\\Blues\\Bundle\\BluesBundle": "src/" }
+    },
+
 }
