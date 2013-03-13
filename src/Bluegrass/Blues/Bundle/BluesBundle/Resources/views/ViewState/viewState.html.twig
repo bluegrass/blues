@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block viewStateRedirect %}
-    Bluegrass.Blues.Blues.ViewState.redirect('{{ url }}',null);
+    Bluegrass.Blues.ViewState.redirect('{{ url }}',null);
 {% endblock %}
 
 {% block viewStateHidden %}
@@ -14,7 +14,7 @@
     <script type="text/javascript">
         
         $(document).ready(function() {	
-            Bluegrass.Blues.Blues.ViewState.renderHiddenViewState('{{ formView.vars.id }}', bluegrass_blues_blues_viewstate_viewstate);
+            Bluegrass.Blues.ViewState.renderHiddenViewState('{{ formView.vars.id }}', bluegrass_blues_blues_viewstate_viewstate);
         });        
         
     </script>
@@ -25,11 +25,11 @@
 
         <script type='text/javascript'>
             
-            var bluegrass_blues_blues_viewstate_viewstate;
+            var bluegrass_blues_viewstate_viewstate;
             
             {% autoescape false %}
                 
-                bluegrass_blues_blues_viewstate_viewstate = new Bluegrass.Blues.Blues.ViewState.ViewState('{{ viewState.vars.requestParamName }}', '{{ viewState.vars.data }}');
+                bluegrass_blues_viewstate_viewstate = new Bluegrass.Blues.ViewState.ViewState('{{ viewState.vars.requestParamName }}', '{{ viewState.vars.data }}');
 
             {% endautoescape %}
         </script>

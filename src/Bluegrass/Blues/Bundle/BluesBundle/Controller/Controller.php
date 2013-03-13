@@ -14,18 +14,6 @@ class Controller extends BaseController
     private $_viewState = null;
     private $_breadcrumb = null;
     
-    /**
-     * Obtiene el nombre del template del cual extenderá el abm.
-     * 
-     * Este template generalmente es el layout utilizado en la aplicación.
-     * 
-     * @return string Nombre del template según convención symfony. 
-     */
-    protected function getParentTemplateName()
-    {
-        return 'BluegrassBluesBluesBundle:Default:layout.html.twig';
-    }    
-    
     public function getDefaultViewParams()
     {
         return array( 'viewState' => $this->getViewState()->createView() );
