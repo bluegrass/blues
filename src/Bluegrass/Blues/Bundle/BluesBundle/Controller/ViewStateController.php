@@ -9,7 +9,7 @@ class ViewStateController extends BaseController
 {
     public function headersAction()
     {        
-        return $this->render('SnappmindsUtilsBluesBundle:ViewState:headers.html.twig',
+        return $this->render('BluegrassBluesBluesBundle:ViewState:headers.html.twig',
                 array()
 		);
     }    
