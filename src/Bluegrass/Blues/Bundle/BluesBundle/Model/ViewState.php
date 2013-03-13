@@ -3,7 +3,7 @@
 namespace Bluegrass\Blues\Bundle\BluesBundle\Model;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Bluegrass\Blues\Bundle\BluesBundle\View\View;
 
 class ViewState
