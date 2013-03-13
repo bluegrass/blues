@@ -1,9 +1,9 @@
 <?php
 
-namespace Bluesgrass\Blues\Bundle\BluesBundle\Extension\Twig;
+namespace Bluegrass\Blues\Bundle\BluesBundle\Extension\Twig;
 
 use Symfony\Component\Form\FormView;
-use Bluesgrass\Blues\Bundle\BluesBundle\View\View;
+use Bluegrass\Blues\Bundle\BluesBundle\View\View;
 
 class ViewStateExtension extends \Twig_Extension
 {
@@ -40,7 +40,7 @@ class ViewStateExtension extends \Twig_Extension
                                     array(
                                             'url' => $url,
                                     ),
-                                    'BluesgrassBluesBluesBundle:ViewState:viewState.html.twig'
+                                    'BluegrassBluesBluesBundle:ViewState:viewState.html.twig'
                             );
       
         return $html;
@@ -55,7 +55,7 @@ class ViewStateExtension extends \Twig_Extension
                                             'url' => $url,
                                             'class' => $class
                                     ),
-                                    'BluesgrassBluesBluesBundle:ViewState:viewState.html.twig'
+                                    'BluegrassBluesBluesBundle:ViewState:viewState.html.twig'
                             );
       
         return $html;
@@ -68,7 +68,7 @@ class ViewStateExtension extends \Twig_Extension
                                     array(
                                             'formView' => $view,
                                     ),
-                                    'BluesgrassBluesBluesBundle:ViewState:viewState.html.twig'
+                                    'BluegrassBluesBluesBundle:ViewState:viewState.html.twig'
                             );
       
         return $html;

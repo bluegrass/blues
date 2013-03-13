@@ -1,5 +1,5 @@
 parameters:
-    twig.extension.viewstate.class: Bluesgrass\Blues\Bundle\BluesBundle\Extension\Twig\ViewStateExtension
+    twig.extension.viewstate.class: Bluegrass\Blues\Bundle\BluesBundle\Extension\Twig\ViewStateExtension
 
 services:
     twig.extension.viewstate:

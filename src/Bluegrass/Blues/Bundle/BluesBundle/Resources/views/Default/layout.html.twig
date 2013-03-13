@@ -3,7 +3,7 @@
 {% block javascripts %}
 	{{ parent() }}
 
-	{% render "BluesgrassBluesBluesBundle:ViewState:headers"  %}
+	{% render "BluegrassBluesBluesBundle:ViewState:headers"  %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -25,11 +25,11 @@
 
         <script type='text/javascript'>
             
-            var bluesgrass_blues_blues_viewstate_viewstate;
+            var bluegrass_blues_blues_viewstate_viewstate;
             
             {% autoescape false %}
                 
-                bluesgrass_blues_blues_viewstate_viewstate = new Bluegrass.Blues.Blues.ViewState.ViewState('{{ viewState.vars.requestParamName }}', '{{ viewState.vars.data }}');
+                bluegrass_blues_blues_viewstate_viewstate = new Bluegrass.Blues.Blues.ViewState.ViewState('{{ viewState.vars.requestParamName }}', '{{ viewState.vars.data }}');
 
             {% endautoescape %}
         </script>

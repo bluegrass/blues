@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluesgrass\Blues\Bundle\BluesBundle\Model;
+namespace Bluegrass\Blues\Bundle\BluesBundle\Model;
 
 class Object
 {
