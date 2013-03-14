@@ -11,20 +11,12 @@
 
 {% block viewStateHidden %}
     <input type='hidden' class='bluegrass-blues-viewstate'>
-    <script type="text/javascript">
-        Bluegrass.Blues.ViewState.renderHiddenViewState(bluegrass_blues_blues_viewstate_viewstate);        
-    </script>        
 {% endblock %}
 
 {% block viewState %}
-        <script type='text/javascript'>
-            
-            var bluegrass_blues_viewstate_viewstate;
-            
-            {% autoescape false %}
-                
-                bluegrass_blues_viewstate_viewstate = new Bluegrass.Blues.ViewState.ViewState('{{ viewState.vars.requestParamName }}', '{{ viewState.vars.data }}');
-
-            {% endautoescape %}
-        </script>        
+    <script type='text/javascript'>            
+        {% autoescape false %}
+            $('body').data('bluegrass_blues_viewstate_viewstate', new Bluegrass.Blues.ViewState.ViewState('{{ viewState.vars.requestParamName }}', '{{ viewState.vars.data }}') );
+        {% endautoescape %}
+    </script>        
 {% endblock %}

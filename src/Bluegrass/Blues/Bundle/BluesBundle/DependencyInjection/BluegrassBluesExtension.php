@@ -43,6 +43,7 @@ class BluegrassBluesExtension extends Extension implements PrependExtensionInter
                 'bluegrassbluesbundle_javascripts' => array(
                     'inputs' => array(
                         '@BluegrassBluesBundle/Resources/public/js/ViewState/ViewState.js',
+                        '@BluegrassBluesBundle/Resources/public/js/ViewState/initialize.js',
                         )
                     )                
                 )
