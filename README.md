@@ -18,7 +18,7 @@ Instalación y configuración
 
 > `{% block stylesheets %}`
 
-> `<link rel="stylesheet" src="{{ asset('assetic/bluegrassbluesbundle_stylesheets.css') }}" type="text/css" />`
+> `<link rel="stylesheet" href="{{ asset('assetic/bluegrassbluesbundle_stylesheets.css') }}" type="text/css" />`
 
 > `{% endblock %}`
 
