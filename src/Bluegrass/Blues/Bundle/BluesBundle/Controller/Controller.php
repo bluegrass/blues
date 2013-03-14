@@ -4,9 +4,11 @@ namespace Bluegrass\Blues\Bundle\BluesBundle\Controller;
 
 use Bluegrass\Blues\Bundle\BreadcrumbBundle\Model\Item;
 use Bluegrass\Blues\Bundle\BluesBundle\Model\ViewState;
+use Bluegrass\Blues\Bundle\BreadcrumbBundle\Model\Breadcrumb;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
+
 
 class Controller extends BaseController
 {
@@ -18,8 +20,8 @@ class Controller extends BaseController
         return array( 'viewState' => $this->getViewState()->createView() );
     }     
 
-     /*   
-     * @return Bluegrass\Blues\Bundle\BreadcrumbBundle\Model\Breadcrumb breadcrumb.
+    /**
+     * @return Breadcrumb 
      */    
     public function getBreadcrumb(){
         
