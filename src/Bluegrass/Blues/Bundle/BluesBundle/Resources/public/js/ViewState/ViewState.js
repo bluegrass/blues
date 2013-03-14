@@ -50,14 +50,10 @@ Bluegrass.Blues.ViewState.redirect = function( url, postData )
     form.submit();
 };
 
-Bluegrass.Blues.ViewState.renderHiddenViewState = function( formId, bluegrass_blues_viewstate_viewstate )
+Bluegrass.Blues.ViewState.renderHiddenViewState = function( bluegrass_blues_viewstate_viewstate )
 {
-    var form = $("#" + formId);
-    
-    var hidden = $('<input type="hidden"></input>');
+    var hidden = $('input.bluegrass-blues-viewstate:hidden');
     
     hidden.val(bluegrass_blues_viewstate_viewstate.getData());
-    hidden.attr('name', bluegrass_blues_viewstate_viewstate.getRequestParamName());
-    hidden.appendTo(form);
-    
+    hidden.attr('name', bluegrass_blues_viewstate_viewstate.getRequestParamName());    
 };

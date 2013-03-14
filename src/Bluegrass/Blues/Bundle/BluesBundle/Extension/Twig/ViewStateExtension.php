@@ -62,12 +62,11 @@ class ViewStateExtension extends \Twig_Extension
         return $html;
     }
 
-    public function renderViewStateHidden( FormView $view )
+    public function renderViewStateHidden()
     {       
         $html = $this->renderBlock(
                                     'viewStateHidden', 
                                     array(
-                                            'formView' => $view,
                                     ),
                                     'BluegrassBluesBundle:ViewState:viewState.html.twig'
                             );
