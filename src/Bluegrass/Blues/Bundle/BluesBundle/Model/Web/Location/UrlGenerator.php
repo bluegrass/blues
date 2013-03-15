@@ -2,22 +2,23 @@
 
 namespace Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location;
 
+
 class UrlGenerator implements UrlGeneratorInterface
 {
     private $routeUrlGenerator;
     
     /**
      * 
-     * @param \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\Symfony\Component\Routing\Generator\UrlGeneratorInterface $value
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $value
      */
-    protected function setRouteUrlGenerator(Symfony\Component\Routing\Generator\UrlGeneratorInterface $value)
+    protected function setRouteUrlGenerator(\Symfony\Component\Routing\Generator\UrlGeneratorInterface $value)
     {
         $this->routeUrlGenerator = $value;
     }
     
     /**
      * 
-     * @return Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
     protected function getRouteUrlGenerator()
     {
@@ -26,9 +27,9 @@ class UrlGenerator implements UrlGeneratorInterface
 
     /**
      * 
-     * @param \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\Symfony\Component\Routing\Generator\UrlGeneratorInterface $routeUrlGenerator
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $routeUrlGenerator
      */
-    public function __construct(Symfony\Component\Routing\Generator\UrlGeneratorInterface $routeUrlGenerator)
+    public function __construct(\Symfony\Component\Routing\Generator\UrlGeneratorInterface $routeUrlGenerator)
     {
         $this->setRouteUrlGenerator($routeUrlGenerator);
     }

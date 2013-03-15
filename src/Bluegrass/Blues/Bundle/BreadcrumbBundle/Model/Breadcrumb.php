@@ -189,7 +189,7 @@ class Breadcrumb implements Countable, Iterator
             if( $i == $last){
                 $titles[] = $item->getTitle();
             }else{
-                $titles[] = "<a href='". $item->getUrl() ."'>" . $item->getTitle() . "</a>";
+                $titles[] = "<a href='TODO'>" . $item->getTitle() . "</a>";
             }
             
             $i++;

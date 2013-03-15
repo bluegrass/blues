@@ -19,7 +19,7 @@
         {% else %}
             
             <div class='breadcrumb-hierarchical-item'>
-                {{ viewstate_link( item.title ,  path( item.routeData.route, item.routeData.params ) ) }}
+                {{ viewstate_link( item.title ,  weblocation_path( item.webLocation ) ) }}
             </div>            
 
             <div class='breadcrumb-hierarchy-separator'> 
