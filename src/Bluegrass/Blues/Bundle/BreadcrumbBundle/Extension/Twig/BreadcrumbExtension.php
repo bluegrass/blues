@@ -3,7 +3,7 @@
 namespace Bluegrass\Blues\Bundle\BreadcrumbBundle\Extension\Twig;
 
 use Bluegrass\Blues\Bundle\BreadcrumbBundle\Model\Breadcrumb;
-use Bluegrass\Blues\Bundle\BluesBundle\View\View;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\View\View;
 
 class BreadcrumbExtension extends \Twig_Extension
 {

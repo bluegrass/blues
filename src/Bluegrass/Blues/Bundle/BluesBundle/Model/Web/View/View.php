@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluegrass\Blues\Bundle\BluesBundle\View;
+namespace Bluegrass\Blues\Bundle\BluesBundle\Model\Web\View;
 
 class View
 {

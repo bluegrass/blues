@@ -1,10 +1,10 @@
 <?php
 
-namespace Bluegrass\Blues\Bundle\BluesBundle\Model;
+namespace Bluegrass\Blues\Bundle\BluesBundle\Model\Web\View;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Bluegrass\Blues\Bundle\BluesBundle\View\View;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\View\View;
 
 class ViewState
 {

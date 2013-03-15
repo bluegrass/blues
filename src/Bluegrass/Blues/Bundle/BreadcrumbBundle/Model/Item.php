@@ -2,15 +2,17 @@
 
 namespace Bluegrass\Blues\Bundle\BreadcrumbBundle\Model;
 
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation;
+
 class Item
 {
     private $title;
-    private $routeData;
+    private $webLocation;
     
-    public function __construct($title, $routeData)
+    public function __construct($title, WebLocation $webLocation)
     {
         $this->title = $title;
-        $this->routeData = $routeData;
+        $this->webLocation = $webLocation;
     }    
 
     public function getTitle()
@@ -18,8 +20,8 @@ class Item
         return $this->title;
     }
 
-    public function getRouteData()
+    public function getWebLocation()
     {
-        return $this->routeData;
+        return $this->webLocation;
     }    
 }

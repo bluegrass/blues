@@ -3,7 +3,7 @@
 namespace Bluegrass\Blues\Bundle\BluesBundle\Extension\Twig;
 
 use Symfony\Component\Form\FormView;
-use Bluegrass\Blues\Bundle\BluesBundle\View\View;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\View\View;
 
 class ViewStateExtension extends \Twig_Extension
 {

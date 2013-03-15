@@ -3,8 +3,9 @@
 namespace Bluegrass\Blues\Bundle\BluesBundle\Controller;
 
 use Bluegrass\Blues\Bundle\BreadcrumbBundle\Model\Item;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\ViewState;
 use Bluegrass\Blues\Bundle\BreadcrumbBundle\Model\Breadcrumb;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\View\ViewState;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
@@ -36,9 +37,9 @@ class Controller extends BaseController
         return $this->_breadcrumb;
     }
     
-    function addBreadcrumbItem( $title, $routeData ){
+    function addBreadcrumbItem( $title, WebLocation $webLocation ){
 
-        $bc = $this->getBreadcrumb()->add(  new Item( $title, $routeData ) );
+        $bc = $this->getBreadcrumb()->add(  new Item( $title, $webLocation ) );
     }
     
     /**
@@ -69,14 +70,15 @@ class Controller extends BaseController
         return $this->_viewState;
     }    
     
-    public function internalRedirect($routeData, $status = 302)
+    public function internalRedirect( WebLocation $webLocation, $status = 302)
     {
         $uniqid = uniqid();
         
-        $params = array_merge( $routeData['params'], array( ViewState::REQUEST_PARAM_NAME => $uniqid ) );
+        $webLocation->setParameters( array_merge( $webLocation->getParameters(), array( ViewState::REQUEST_PARAM_NAME => $uniqid ) ) );
         
         $this->get('session')->set($uniqid, $this->getViewState()->getData() );
         
-        return parent::redirect( $this->generateUrl($routeData['route'], $params) , $status);
+        $url = "TO-DO"; // $this->generateUrl($routeData['route'], $params)
+        return parent::redirect( $url , $status);
     }    
 }

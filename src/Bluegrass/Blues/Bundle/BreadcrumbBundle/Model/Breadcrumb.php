@@ -2,8 +2,8 @@
 
 namespace Bluegrass\Blues\Bundle\BreadcrumbBundle\Model;
 
-use Bluegrass\Blues\Bundle\BluesBundle\View\View;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\ViewState;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\View\View;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\View\ViewState;
 
 use \Countable;
 use \Iterator;
@@ -49,10 +49,10 @@ class Breadcrumb implements Countable, Iterator
         $foundKey = false;
         foreach( $trail as $key => $element ){
             
-            $elementRouteData = $element->getRouteData();
-            $itemRouteData = $item->getRouteData();
+            $elementWebLocation = $element->getWebLocation();
+            $itemWebLocation = $item->getWebLocation();
             
-            if( $elementRouteData['route'] == $itemRouteData['route'] ){
+            if( $elementWebLocation->equals( $itemWebLocation ) ){
                 $foundKey = $key;                
             }
         }
@@ -207,4 +207,3 @@ class Breadcrumb implements Countable, Iterator
     }
     
 }
-?>
