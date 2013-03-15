@@ -21,6 +21,7 @@ abstract class WebLocation extends Object
         $this->parameters = $parameters;
     }    
     
+    public abstract function generateUrlWith(UrlGeneratorInterface $urlGenerator, $referenceType);
     
 }
 

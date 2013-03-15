@@ -26,6 +26,10 @@ class UrlBasedLocation extends WebLocation
         $this->url = $url;
     }
 
+    public function generateUrlWith(UrlGeneratorInterface $urlGenerator, $referenceType) {
+        return $urlGenerator->generateFromUrlBasedLocation($this);
+    }
+
    
 }
 

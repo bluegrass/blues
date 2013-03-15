@@ -30,5 +30,9 @@ class RouteBasedLocation extends WebLocation
     {
         return ( $this == $object ) && ($this->getName() == $object->getName());
     }
+
+    public function generateUrlWith(UrlGeneratorInterface $urlGenerator, $referenceType) {
+        return $urlGenerator->generateFromRouteBasedLocation($this, $referenceType);
+    }
 }
 
