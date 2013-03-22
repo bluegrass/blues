@@ -3,7 +3,7 @@ namespace Bluegrass\Blues\Bundle\BluesBundle\Tests\Util;
 
 use Doctrine\ORM\Tools\SchemaTool;
 
-class ModelDrivenTest extends \PHPUnit_Framework_TestCase 
+abstract class ModelDrivenTest extends \PHPUnit_Framework_TestCase 
 {
 /**
      * @var Symfony\Component\HttpKernel\AppKernel

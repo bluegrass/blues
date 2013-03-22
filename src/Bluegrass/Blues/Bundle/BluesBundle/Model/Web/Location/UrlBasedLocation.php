@@ -26,8 +26,7 @@ class UrlBasedLocation extends WebLocation
             return $this->getPath() . "?" . http_build_query( $this->getParameters() );    
         }else{
             return $this->getPath();    
-        }
-        
+        }        
     }
     
     public function getPath()
