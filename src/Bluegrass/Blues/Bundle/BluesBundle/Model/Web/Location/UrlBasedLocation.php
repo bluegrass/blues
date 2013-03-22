@@ -8,33 +8,35 @@ namespace Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location;
  */
 class UrlBasedLocation extends WebLocation
 {
-
-    private $url;
+    private $path;
 
     public function __construct($url, $parameters = array())
-    {                        
-        $this->setUrl($url);
+    {          
+        if( false === strpos( $url, '?' ) ){
+            $this->setPath( $url );    
+        }else{
+            $this->setPath( substr( $url, 0, strpos( $url, '?' ) ) );    
+        }        
         $this->setParameters( array_merge( $this->getQueryStringArray($url) , $parameters   ) );
     }
 
     public function getUrl()
     {
-        return $this->url;
+        if( $this->getParameters()  ){
+            return $this->getPath() . "?" . http_build_query( $this->getParameters() );    
+        }else{
+            return $this->getPath();    
+        }
+        
     }
-
-    public function setUrl($url)
-    {
-        $this->url = $this->getPath( $url );
-    }
-
-    public function generateUrlWith(UrlGeneratorInterface $urlGenerator, $referenceType)
-    {
-        return $urlGenerator->generateFromUrlBasedLocation($this);
-    }
-
-    protected function getPath( $url )
+    
+    public function getPath()
     {            
-        return substr( $url, 0, strpos( $url, '?' ) );
+        return $this->path;
+    }
+    
+    protected function setPath( $path ){
+        $this->path = $path;
     }
 
     protected function getQueryStringArray($url)
@@ -56,6 +58,11 @@ class UrlBasedLocation extends WebLocation
             $result[$key] = $val;
         }
         return empty($result) ? array() : $result;
+    }
+    
+    public function generateUrlWith(UrlGeneratorInterface $urlGenerator, $referenceType)
+    {
+        return $urlGenerator->generateFromUrlBasedLocation($this);
     }
 
 }
