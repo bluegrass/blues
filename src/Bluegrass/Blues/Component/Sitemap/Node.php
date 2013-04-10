@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Sitemap;
 
-use \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation;
+use \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
 
 /**
  * Description of Node
@@ -17,7 +17,7 @@ class Node
     private $navigable;
     private $location;
     
-    public function __construct($label, WebLocation $location = null, $navigable = true)
+    public function __construct($label, RouteBasedLocation $location = null, $navigable = true)
     {                
         if ($location == null)
             $navigable = false;
@@ -31,9 +31,9 @@ class Node
     
     /**
      * 
-     * @param \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation $value
+     * @param \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation $value
      */
-    protected function setLocation(WebLocation $value = null)
+    protected function setLocation(RouteBasedLocation $value = null)
     {
         if ($value == null && $this->isNavigable())
             throw new \InvalidArgumentException("Un nodo sin location no puede ser navegable.");
@@ -126,7 +126,7 @@ class Node
         return $this->parent;
     }
     
-    public function addChild($label, WebLocation $location = null, $navigable = true)
+    public function addChild($label, RouteBasedLocation $location = null, $navigable = true)
     {
         $child = new Node($label, $location, $navigable);
         

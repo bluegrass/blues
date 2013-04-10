@@ -4,13 +4,13 @@ namespace Bluegrass\Blues\Component\Tests\Sitemap;
 
 use Bluegrass\Blues\Component\Sitemap\Node;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlBasedLocation;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
 
 class NodeTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
-        new Node("home", new UrlBasedLocation("test"));
+        new Node("home", new RouteBasedLocation("test"));
         
         new Node("home", null);
     }

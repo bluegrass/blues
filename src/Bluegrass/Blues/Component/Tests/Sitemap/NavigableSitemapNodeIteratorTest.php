@@ -4,16 +4,16 @@ namespace Bluegrass\Blues\Component\Tests\Sitemap;
 
 use Bluegrass\Blues\Component\Sitemap\Sitemap;
 use Bluegrass\Blues\Component\Sitemap\NavigableSitemapNodeIterator;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlBasedLocation;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
 
 class NavigableSitemapNodeIteratorTest extends \PHPUnit_Framework_TestCase
 {    
     public function testIterate()
     {
-        $sitemap = new Sitemap("home", new UrlBasedLocation("test"));
+        $sitemap = new Sitemap("home", new RouteBasedLocation("test"));
         
-        $n1 = $sitemap->getRoot()->addChild("n1", new UrlBasedLocation("test"));
-        $n2 = $n1->addChild("n2", new UrlBasedLocation("test"));
+        $n1 = $sitemap->getRoot()->addChild("n1", new RouteBasedLocation("test"));
+        $n2 = $n1->addChild("n2", new RouteBasedLocation("test"));
         $n3 = $n1->addChild("n3", null);        
                         
         $it = new \RecursiveIteratorIterator(new NavigableSitemapNodeIterator($sitemap->getIterator()), \RecursiveIteratorIterator::SELF_FIRST);

@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Sitemap;
 
-use \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation;
+use \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
 
 /**
  * Description of Sitemap
@@ -13,7 +13,7 @@ class Sitemap implements \IteratorAggregate
 {
     private $root;
     
-    public function __construct($rootLabel, WebLocation $rootLocation = null, $rootNavigable = true)
+    public function __construct($rootLabel, RouteBasedLocation $rootLocation = null, $rootNavigable = true)
     {
         $this->setRoot(new Node($rootLabel, $rootLocation, $rootNavigable));
     }
