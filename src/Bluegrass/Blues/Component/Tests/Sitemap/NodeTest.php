@@ -31,7 +31,7 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     public function testHasChildren()
     {
         $n1 = new Node("n1", null);
-        $n2 = $n1->addChild("n2", null);
+        $n2 = $n1->addChild(new Node("n2", null));
         
         $this->assertTrue(
             $n1->hasChildren(),

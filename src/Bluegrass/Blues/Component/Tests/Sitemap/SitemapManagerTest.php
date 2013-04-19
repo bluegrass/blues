@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Tests\Sitemap;
 
-use Bluegrass\Blues\Component\Tests\Sitemap\Mocks\SitemapManagerMock;
+use Bluegrass\Blues\Component\Tests\SitemapManagerMock;
 use Symfony\Component\HttpFoundation\Request;
 
 class SitemapManagerTest extends \PHPUnit_Framework_TestCase 

@@ -2,9 +2,11 @@
 
 namespace Bluegrass\Blues\Component\Tests\Sitemap;
 
-use Bluegrass\Blues\Component\Sitemap\Sitemap;
-use Bluegrass\Blues\Component\Sitemap\NavigableSitemapNodeIterator;
 use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Sitemap\NavigableSitemapNodeIterator;
+use Bluegrass\Blues\Component\Sitemap\Node;
+use Bluegrass\Blues\Component\Sitemap\Sitemap;
+use RecursiveIteratorIterator;
 
 class NavigableSitemapNodeIteratorTest extends \PHPUnit_Framework_TestCase
 {    
@@ -12,11 +14,11 @@ class NavigableSitemapNodeIteratorTest extends \PHPUnit_Framework_TestCase
     {
         $sitemap = new Sitemap("home", new RouteBasedLocation("test"));
         
-        $n1 = $sitemap->getRoot()->addChild("n1", new RouteBasedLocation("test"));
-        $n2 = $n1->addChild("n2", new RouteBasedLocation("test"));
-        $n3 = $n1->addChild("n3", null);        
+        $n1 = $sitemap->getRoot()->addChild(new Node("n1", new RouteBasedLocation("test")));
+        $n2 = $n1->addChild(new Node("n2", new RouteBasedLocation("test")));
+        $n3 = $n1->addChild(new Node("n3", null));        
                         
-        $it = new \RecursiveIteratorIterator(new NavigableSitemapNodeIterator($sitemap->getIterator()), \RecursiveIteratorIterator::SELF_FIRST);
+        $it = new RecursiveIteratorIterator(new NavigableSitemapNodeIterator($sitemap->getIterator()), RecursiveIteratorIterator::SELF_FIRST);
                
         $it->rewind();
         
