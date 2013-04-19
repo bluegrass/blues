@@ -17,9 +17,9 @@ class SitemapIteratorTest extends \PHPUnit_Framework_TestCase
     {
         $sitemap = new Sitemap("home", null);
         
-        $n1 = $sitemap->getRoot()->addChild("n1", null);
-        $n2 = $n1->addChild("n2", null);
-        $n3 = $n1->addChild("n3", null);        
+        $n1 = $sitemap->getRoot()->addChild(new Node("n1", null));
+        $n2 = $n1->addChild(new Node("n2", null));
+        $n3 = $n1->addChild(new Node("n3", null));        
         
         
         $it = new \RecursiveIteratorIterator($sitemap->getIterator(), \RecursiveIteratorIterator::SELF_FIRST);

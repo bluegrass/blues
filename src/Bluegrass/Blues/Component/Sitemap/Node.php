@@ -9,7 +9,7 @@ use \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
  *
  * @author gcaseres
  */
-class Node 
+class Node implements NodeInterface
 {
     private $parent;
     private $children;
@@ -18,15 +18,15 @@ class Node
     private $location;
     
     public function __construct($label, RouteBasedLocation $location = null, $navigable = true)
-    {                
-        if ($location == null)
-            $navigable = false;
-        
+    {                        
         $this->setNavigable(false);
-        $this->setLocation($location);
-        $this->setNavigable($navigable);
+        $this->setLocation($location);        
         $this->setLabel($label);        
         $this->setChildren(new \ArrayObject());
+        
+        if ($location == null)
+            $navigable = false;        
+        $this->setNavigable($navigable);
     }
     
     /**
@@ -126,14 +126,17 @@ class Node
         return $this->parent;
     }
     
-    public function addChild($label, RouteBasedLocation $location = null, $navigable = true)
+    public function addChild(NodeInterface $node)
     {
-        $child = new Node($label, $location, $navigable);
+        $node->setParent($this);
+        $this->getChildrenCollection()->append($node);
         
-        $child->setParent($this);
-        $this->getChildrenCollection()->append($child);
-        
-        return $child;
+        return $node;
+    }
+    
+    public function hasParent()
+    {
+        return $this->getParent() != null;
     }
     
     public function hasChildren()
