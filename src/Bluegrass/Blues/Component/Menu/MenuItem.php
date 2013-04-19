@@ -11,6 +11,7 @@ class MenuItem
     private $name;
     private $label;
     private $location;
+    private $current;
     
     public function __construct($name, $label, RouteBasedLocation $location = null)
     {                
@@ -18,6 +19,7 @@ class MenuItem
         $this->setLabel($label);        
         $this->setName($name);
         $this->setChildren(new \ArrayObject());
+        $this->setCurrent(false);
     }    
 
     public function getName()
@@ -123,5 +125,14 @@ class MenuItem
         return new MenuItemIterator($nodes);
     }
     
+    public function isCurrent()
+    {
+        return $this->current;
+    }
+
+    public function setCurrent($current)
+    {
+        $this->current = $current;
+    }    
 }
 

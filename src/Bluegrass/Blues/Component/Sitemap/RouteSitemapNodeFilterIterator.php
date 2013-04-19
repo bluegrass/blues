@@ -2,52 +2,42 @@
 
 namespace Bluegrass\Blues\Component\Sitemap;
 
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+
 class RouteSitemapNodeFilterIterator extends \FilterIterator
 {
-    private $routeName;
-    private $routeParams;
+    private $location;
     
-    public function __construct(SitemapIterator $iterator, $routeName, array $routeParams)
+    public function __construct(SitemapIterator $iterator, RouteBasedLocation $location)
     {
         parent::__construct(new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::SELF_FIRST));
         
-        $this->setRouteName($routeName);
-        $this->setRouteParams($routeParams);
+        $this->setLocation($location);
     }
-    
-    protected function setRouteName($value)
+
+    /**
+     * 
+     * @return RouteBasedLocation
+     */
+    public function getLocation()
     {
-        $this->routeName = $value;
+        return $this->location;
     }
-    
-    protected function getRouteName()
+
+    public function setLocation(RouteBasedLocation $location)
     {
-        return $this->routeName;
-    }
-    
-    protected function setRouteParams(array $value)
-    {
-        $this->routeParams = $value;
-    }
-    
-    protected function getRouteParams()
-    {
-        return $this->routeParams;
+        $this->location = $location;
     }
     
     public function accept() 
     {
-        $location = $this->current()->getLocation();
-        $params = $this->getRouteParams();
-       
-        $result = $this->getRouteName() == $location->getName();
+        $currentLocation = $this->current()->getLocation();
         
-        foreach ($location->getParameters() as $key => $value)
-        {
-            $result &= isset($params[$key]) && $params[$key] == $value;
+        if ( $currentLocation ){
+            return $currentLocation->equals( $this->getLocation() );    
+        }else{
+            return false;
         }
-        
-        return $result;
     }
 }
 

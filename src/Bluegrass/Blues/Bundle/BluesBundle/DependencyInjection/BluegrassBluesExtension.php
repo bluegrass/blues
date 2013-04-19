@@ -24,7 +24,7 @@ class BluegrassBluesExtension extends Extension implements PrependExtensionInter
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services.yml');        
     }
     
     public function prepend(ContainerBuilder $container)
@@ -55,6 +55,7 @@ class BluegrassBluesExtension extends Extension implements PrependExtensionInter
                     $container->prependExtensionConfig($name, $config);
                     break;
             }
-        }
+        }                
+        
     }       
 }

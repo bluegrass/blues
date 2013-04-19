@@ -43,7 +43,7 @@ class Node
     
     /**
      * 
-     * @return \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation
+     * @return \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation
      */
     public function getLocation()
     {

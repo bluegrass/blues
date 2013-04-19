@@ -1,0 +1,14 @@
+{% block bluegrass_blues_menu %}
+    {% macro bluegrass_blues_menu_render( menu ) %}
+                <ul>
+                    {% for submenu in menu.children %}
+                        <li id="pronit_ui_mainmenu_submenu_{{ submenu.name }}">
+                                <a href="#">{{ submenu.label }}</a>
+                                {{ _self.bluegrass_blues_menu_render( submenu )  }}
+                        </li>
+                    {% endfor %}
+                </ul>
+    {% endmacro %}
+
+    {{ _self.bluegrass_blues_menu_render(menu) }}
+{% endblock %}

@@ -27,8 +27,17 @@ class RouteBasedLocation extends WebLocation
     }
 
     public function equals($object)
-    {
-        return ( $this == $object ) && ($this->getName() == $object->getName());
+    {        
+        $result = ( get_class($this) == get_class($object) ) && ($this->getName() == $object->getName());
+        
+        $params = $this->getParameters();
+        
+        foreach ($object->getParameters() as $key => $value)
+        {
+            $result &= isset($params[$key]) && $params[$key] == $value;
+        }
+        
+        return $result;        
     }
 
     public function generateUrlWith(UrlGeneratorInterface $urlGenerator, $referenceType) {

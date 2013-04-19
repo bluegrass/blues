@@ -3,6 +3,7 @@
 namespace Bluegrass\Blues\Component\Sitemap;
 
 use Symfony\Component\HttpFoundation\Request;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
 
 abstract class AbstractSitemapManager implements SitemapManagerInterface
 {
@@ -31,8 +32,10 @@ abstract class AbstractSitemapManager implements SitemapManagerInterface
     {
         $routeName = $request->get('_route');
         $routeParameters = $request->get('_route_params');
+        
+        $location = new RouteBasedLocation($routeName, $routeParameters);
 
-        $it = new RouteSitemapNodeFilterIterator($this->getSitemap()->getIterator(), $routeName, $routeParameters);
+        $it = new RouteSitemapNodeFilterIterator($this->getSitemap()->getIterator(), $location);
                         
         $nodes = new \ArrayObject(iterator_to_array($it, false));
         
