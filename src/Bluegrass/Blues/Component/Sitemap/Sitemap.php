@@ -13,9 +13,9 @@ class Sitemap implements \IteratorAggregate
 {
     private $root;
     
-    public function __construct($rootLabel, RouteBasedLocation $rootLocation = null, $rootNavigable = true)
+    public function __construct($rootName, $rootLabel, RouteBasedLocation $rootLocation = null, $rootNavigable = true)
     {
-        $this->setRoot(new Node($rootLabel, $rootLocation, $rootNavigable));
+        $this->setRoot(new Node($rootName, $rootLabel, $rootLocation, $rootNavigable));
     }
     
     /**

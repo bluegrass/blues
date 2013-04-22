@@ -12,6 +12,7 @@ abstract class AbstractSitemapManager implements SitemapManagerInterface
     public function __construct()
     {
         $this->setSitemap($this->buildSitemap());
+        
     }
     
     protected function setSitemap(Sitemap $value)

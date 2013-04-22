@@ -8,8 +8,6 @@ class SitemapTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
-        new Sitemap("home", null, false);
-    }
-    
-
+        new Sitemap( "h1" , "home", null, false);
+    }    
 }

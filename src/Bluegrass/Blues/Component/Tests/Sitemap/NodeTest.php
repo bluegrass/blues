@@ -10,16 +10,16 @@ class NodeTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
-        new Node("home", new RouteBasedLocation("test"));
+        new Node("h-1","home", new RouteBasedLocation("test"));
         
-        new Node("home", null);
+        new Node("h-1","home", null);
     }
     
     public function testAddChild()
     {
-        $home = new Node("home", null);
+        $home = new Node("h-1","home", null);
         
-        $child = $home->addChild(new Node("home", null));
+        $child = $home->addChild(new Node("h-1-1","home child", null));
         
         $this->assertEquals(
             $home,        
@@ -30,15 +30,15 @@ class NodeTest extends \PHPUnit_Framework_TestCase
     
     public function testHasChildren()
     {
-        $n1 = new Node("n1", null);
-        $n2 = $n1->addChild(new Node("n2", null));
+        $n1 = new Node( "h-1", "n1", null);
+        $n2 = $n1->addChild( new Node( "h-1-1", "n2", null ) );
         
         $this->assertTrue(
             $n1->hasChildren(),
             "Se esperaba que el nodo contenga hijos."
         );
         
-        $n1 = new Node("n1", null);
+        $n1 = new Node( "h-1", "n1", null);
         
         $this->assertFalse(
             $n1->hasChildren(),
