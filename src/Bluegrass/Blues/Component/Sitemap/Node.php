@@ -13,12 +13,14 @@ class Node implements NodeInterface
 {
     private $parent;
     private $children;
+    private $name;
     private $label;
     private $navigable;
     private $location;
     
-    public function __construct($label, RouteBasedLocation $location = null, $navigable = true)
-    {                        
+    public function __construct($name, $label, RouteBasedLocation $location = null, $navigable = true)
+    {                      
+        $this->setName($name);
         $this->setNavigable(false);
         $this->setLocation($location);        
         $this->setLabel($label);        
@@ -27,6 +29,16 @@ class Node implements NodeInterface
         if ($location == null)
             $navigable = false;        
         $this->setNavigable($navigable);
+    }
+    
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
     
     /**

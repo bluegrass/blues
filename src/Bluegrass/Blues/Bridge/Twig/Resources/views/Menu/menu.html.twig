@@ -2,7 +2,8 @@
     {% macro bluegrass_blues_menu_render( menu ) %}
                 <ul>
                     {% for submenu in menu.children %}
-                        <li id="pronit_ui_mainmenu_submenu_{{ submenu.name }}">
+                        <li class='bluegrass_blues_menu_menuitem {% if  submenu.current %}bluegrass_blues_menu_menuitem_current{% endif %}' 
+                                id="bluegrass_blues_menu_menuitem_{{ submenu.name }}">
                                 <a href="#">{{ submenu.label }}</a>
                                 {{ _self.bluegrass_blues_menu_render( submenu )  }}
                         </li>

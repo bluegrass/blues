@@ -15,11 +15,11 @@ class SitemapIteratorTest extends \PHPUnit_Framework_TestCase
     
     public function testIterate()
     {
-        $sitemap = new Sitemap("home", null);
+        $sitemap = new Sitemap( "h-1", "home", null);
         
-        $n1 = $sitemap->getRoot()->addChild(new Node("n1", null));
-        $n2 = $n1->addChild(new Node("n2", null));
-        $n3 = $n1->addChild(new Node("n3", null));        
+        $n1 = $sitemap->getRoot()->addChild(new Node( "h-1-1", "n1", null));
+        $n2 = $n1->addChild(new Node( "h-1-1-1", "n2", null));
+        $n3 = $n1->addChild(new Node( "h-1-1-2","n3", null));        
         
         
         $it = new \RecursiveIteratorIterator($sitemap->getIterator(), \RecursiveIteratorIterator::SELF_FIRST);

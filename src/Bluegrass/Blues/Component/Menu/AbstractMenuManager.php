@@ -69,7 +69,7 @@ abstract class AbstractMenuManager implements MenuManagerInterface
     {        
         foreach ( $node->getChildren() as $childNode ) {             
             if( $childNode->isNavigable() ){
-                $subMenu = $menu->addChild( $childNode->getLabel(), $childNode->getLabel(), $childNode->getLocation() );
+                $subMenu = $menu->addChild( $childNode->getName(), $childNode->getLabel(), $childNode->getLocation() );
                 $this->buildMenuItemFromSitemapNode( $subMenu, $childNode );                
             }
         }
@@ -82,7 +82,7 @@ abstract class AbstractMenuManager implements MenuManagerInterface
         $it = $sitemapManager->getSitemap()->getIterator();
         foreach ( $it as $node ) { 
             
-            $menu = new MenuItem( $node->getLabel(), $node->getLabel(), $node->getLocation() );
+            $menu = new MenuItem( $node->getName(), $node->getLabel(), $node->getLocation() );
             $this->buildMenuItemFromSitemapNode( $menu, $node );
             
         }
