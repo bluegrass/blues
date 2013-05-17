@@ -2,11 +2,11 @@
 
 namespace Bluegrass\Blues\Component\Breadcrumb;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlBasedLocation;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
 use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGeneratorInterface;
-use Bluegrass\Blues\Component\Breadcrumb\Model\Item;
 use Bluegrass\Blues\Component\Breadcrumb\BreadcrumbManagerInterface;
 use Bluegrass\Blues\Component\Breadcrumb\Model\Breadcrumb;
+use Bluegrass\Blues\Component\Breadcrumb\Model\Item;
 use Bluegrass\Blues\Component\Breadcrumb\Sitemap\DynamicLabelNodeProcessor;
 use Bluegrass\Blues\Component\Sitemap\NodeInterface;
 use Bluegrass\Blues\Component\Sitemap\SitemapManagerInterface;
@@ -66,13 +66,14 @@ class DefaultBreadcrumbManager implements BreadcrumbManagerInterface
      * función de los parámetros de la URL a la que hace referencia.
      *  
      * @param NodeInterface $node
-     * @param string $url Url que se utilizará como base para obtener los
-     * parámetros que modificarán la etiqueta.
+     * @param RouteBasedLocation $location WebLocation que se utilizará como 
+     * base para obtener los parámetros que modificarán la etiqueta.
      */
-    protected function processNodeLabel(NodeInterface $node, $url)
+    protected function processNodeLabel(NodeInterface $node, RouteBasedLocation $location)
     {        
-        $requestParameters = $this->getRouter()->match($url);
-        $nodeProcessor = new DynamicLabelNodeProcessor($requestParameters);
+
+        //$requestParameters = $this->getRouter()->match($url);
+        $nodeProcessor = new DynamicLabelNodeProcessor($location->getParameters());
         $nodeProcessor->process($node);    
     }
    
@@ -92,7 +93,7 @@ class DefaultBreadcrumbManager implements BreadcrumbManagerInterface
         
         //Agregar los items al breadcrumb
         foreach ($nodesInfo as $item) {
-            $result->add(new Item($item['label'], new UrlBasedLocation($item['url'])));
+            $result->add(new Item($item['name'], $item['label'], $item['location']));
         }
         
         return $result;        
@@ -124,14 +125,16 @@ class DefaultBreadcrumbManager implements BreadcrumbManagerInterface
             $item = array();
             
             
-            $item['url'] = $nodeUrls[$i];
+            $item['location'] = $nodeUrls[$i];
             /* 
              * Procesar el nodo para actualizar su label en función
              * de una url.
+             * Solo se procesan los nodos que tienen un location (son navegables)
              */
-            $this->processNodeLabel($current, $item['url']);
+            $this->processNodeLabel($current, $item['location']);
 
             $item['label'] = $current->getLabel();
+            $item['name'] = $current->getName();
             
             $items[] = $item;
             
@@ -143,31 +146,39 @@ class DefaultBreadcrumbManager implements BreadcrumbManagerInterface
     }
     
     /**
-     * Obtiene las URLs históricas del breadcrumb.
+     * Obtiene los parámetros de estado del breadcrumb.
      * 
-     * Las URLs se obtienen del patrámetro GET bc.url
+     * El estado se obtiene del parámetro GET bc_url
      * Este parámetro debería reenviarse en cada requerimiento para asegurar
-     * que todas las acciones que utilicen breadcrumbs permitan el acceso a
-     * urls anteriores.
+     * que todas las acciones que utilicen breadcrumbs permitan el acceso al
+     * estado del breadcrumb de acuerdo a la manera que accedió el usuario a
+     * cada nodo.
      * 
-     * @return array Arreglo de strings donde cada elemento contiene una URL.
-     * Si el parámetro no está definido, devuelve un arreglo vacío.
+     * @return array Arreglo de arreglos donde cada elemento contiene los
+     * parámetros.
+     * Si no está definido 'bc_url', devuelve un arreglo vacío.
      */
-    protected function getHistoryUrls(Request $request)
+    protected function getViewStateParams(Request $request)
     {
         $prefix = 'bc';
         /* 
-         * Obtener las urls de los nodos históricos del breadcrumb.
+         * Obtener los parámetros históricos de los nodos del breadcrumb.
         */
-        $node_urls = array();
-        if ($request->query->has($prefix . '.url')) {
-            $node_urls = json_decode($request->query->get($prefix . '.url'));
-            //Se agrega la url del requerimiento como último nodo.
-            $node_urls[] = $request->getUri();            
-
+        try {
+            $nodes_params = array();
+            if ($request->query->has($prefix . '_url')) {
+                $nodes_params = json_decode(gzuncompress(base64_decode($request->query->get($prefix . '_url'))), true);
+            }
+        } catch (\Exception $e) {
+            return null;
         }
         
-        return $node_urls;
+        $result = array();        
+        foreach ($nodes_params as $node_params) { 
+            $result[] = $node_params;
+        }
+        
+        return $result;
     }
     
     /**
@@ -212,29 +223,60 @@ class DefaultBreadcrumbManager implements BreadcrumbManagerInterface
      */
     protected function getNodeUrls(Request $request, $sitemapTrail)
     {
-        $node_urls = $this->getHistoryUrls($request);
+        $nodes_params = $this->getViewStateParams($request);
+        $nodes_locations = array();
+
+        $fallback = true;
         
         /*
-         * Validar que la cantidad de nodos históricos sea igual a la cantidad
-         * de nodos estáticos.
+         * Se recorre cada nodo del sitemap.
+         * Al mismo tiempo avanza sobre los nodos del ViewState y verifica que
+         * el nombre del nodo del ViewState sea equivalente al nombre del nodo
+         * del Sitemap.
+         * Mientras se cumpla esta condición, utiliza los parámetros residentes
+         * en el ViewState para cada nodo.
+         * 
+         * En caso que se acaben los nodos del ViewState, se sigue avanzando pero
+         * se toman los valores por defecto para los parámetros definidos en los
+         * nodos del Sitemap.
+         * 
+         * Si en algún momento uno de los nodos del Sitemap contiene un nombre
+         * diferente al ViewState, se activa el flag "fallback" y se vuelve
+         * a regenerar la lista de URLs pero tomando solo los valores del Sitemap.
          */
-        if (count($node_urls) != count($sitemapTrail)) {
-            //Si la cantidad es diferente, ignorar los nodos históricos.            
+        for ($i=0; $i < count($sitemapTrail); $i++) {
+            $fallback = false;
+            if ($i < count($nodes_params) && $nodes_params[$i]['name'] == $sitemapTrail[$i]->getName()) {
+                $nodes_locations[$i] = new RouteBasedLocation($sitemapTrail[$i]->getLocation()->getName(), $nodes_params[$i]['params']);
+            } else {
+                if ($i >= count($nodes_params)) {
+                    $nodes_locations[] = new RouteBasedLocation($sitemapTrail[$i]->getLocation()->getName(), $sitemapTrail[$i]->getLocation()->getParameters());
+                } else {
+                    $fallback = true;
+                    break;
+                }
+            }
+        }        
+
+        if ($fallback) {                     
             /* 
-             * No hay urls históricas definidas. Generar las urls a partir de la
+             * No hay urls históricas definidas o no es posible generar el breadcrumb
+             * a partir de las mismas. Generar las urls de los nodos a partir de la
              * información de los nodos del sitemap.
-             */
+             */            
             foreach ($sitemapTrail as $node) {
-                $url = '';
-                
-                if ($node->isNavigable())
-                    $url = $this->getUrlGenerator()->generate($node->getLocation());
-                
-                $node_urls[] = $url;
+                $nodes_locations[] = new RouteBasedLocation($node->getLocation()->getName(), $node->getLocation()->getParameters());
             }
         }
         
-        return $node_urls;
+        
+        //Agregar al nodo final (el actual) los parámetros del requerimiento
+        $current = $nodes_locations[count($nodes_locations) - 1];        
+        $request_params = $request->query->all();
+        unset($request_params['bc_url']); //Quitar el parámetro de estado del breadcrumb.
+        $nodes_locations[count($nodes_locations) - 1] = new RouteBasedLocation($current->getName(), array_merge($current->getParameters(), $request_params));
+                
+        return $nodes_locations;
     }
     
 

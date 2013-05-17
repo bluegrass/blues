@@ -5,6 +5,7 @@ namespace Bluegrass\Blues\Component\Breadcrumb\Sitemap;
 use Bluegrass\Blues\Component\Breadcrumb\Sitemap\AbstractDynamicLabelNodeProcessor;
 use Bluegrass\Blues\Component\Breadcrumb\Sitemap\DynamicLabelNodeInterface;
 
+
 /**
  * Procesador de DynamicLabelNode que verifica si el nodo es un DynamicLabelNode
  * y si lo es lo procesa con los parámetros especificados.

@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Widgets\Breadcrumb\Views;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlBasedLocation;
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
 use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGeneratorInterface;
 use Bluegrass\Blues\Component\Breadcrumb\Model\Item;
 use Bluegrass\Blues\Component\Views\ViewModel;
@@ -25,13 +25,11 @@ class BreadcrumbViewModelBuilder implements WidgetViewModelBuilderInterface
      * Inicializa una instancia de un constructor de viewmodels para breadcrumbs.
      * 
      * Esta implementación utiliza parámetros HTTP para asociar el contenido
-     * histórico del breadcrumb a las URLs de cada nodo. Si no se especifica
-     * un generador de urls, directamente se utiliza el método getUrl de
-     * UrlBasedLocation.
+     * histórico del breadcrumb a las URLs de cada nodo. 
      * 
      * @param \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGeneratorInterface $urlGenerator 
      */
-    public function __construct(UrlGeneratorInterface $urlGenerator = null)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->setUrlGenerator($urlGenerator);
     }
@@ -44,14 +42,14 @@ class BreadcrumbViewModelBuilder implements WidgetViewModelBuilderInterface
         return $this->buildInternal($widget);
     }
     
-    protected function setUrlGenerator(UrlGeneratorInterface $value = null)
+    protected function setUrlGenerator(UrlGeneratorInterface $value)
     {
         $this->urlGenerator = $value;
     }
     
     /**
      * 
-     * @return Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGeneratorInterface
+     * @return UrlGeneratorInterface
      */
     protected function getUrlGenerator()
     {
@@ -65,12 +63,17 @@ class BreadcrumbViewModelBuilder implements WidgetViewModelBuilderInterface
         $viewModel->set('count', $widget->count());
      
         $items = array();
-        
+                
         foreach ($widget as $itemModel) {
-            $items[] = $this->buildItemViewModel($widget, $itemModel);
+            $items[] = $this->buildItemViewModel($widget, $itemModel);                        
+            $last = $itemModel;
         }
         
+
+        $viewModel->set('viewstate', $this->getViewStateForItem($widget, $last));
+        
         $viewModel->set('items', $items);
+        
         
         return $viewModel;
     }
@@ -85,6 +88,29 @@ class BreadcrumbViewModelBuilder implements WidgetViewModelBuilderInterface
         return $view;        
     }
     
+    protected function getViewStateForItem(BreadcrumbWidget $widget, Item $itemModel)
+    {
+        $trail = $widget->getTrailFor($itemModel);
+        $i=0;
+        
+        $urlNodes = array();
+        foreach ($trail as $trailItem) {
+            $name = $trailItem->getName();
+            $params = $trailItem->getWebLocation()->getParameters();
+            
+            $urlNode = array('name' => $name, 'params' => $params);
+            
+            $urlNodes[] = $urlNode;
+            
+            $i++;
+        }
+                
+        //Agregar datos del nodo actual
+        $urlNodes[] = array('name' => $itemModel->getName(), 'params' => $itemModel->getWebLocation()->getParameters());
+        
+        return base64_encode(gzcompress(json_encode($urlNodes, JSON_FORCE_OBJECT)));
+    }
+    
     /**
      * Genera una url para el item especificado.
      * La url generada contiene los parámetros necesarios para reconstruir
@@ -96,28 +122,13 @@ class BreadcrumbViewModelBuilder implements WidgetViewModelBuilderInterface
     protected function getUrlForItem(BreadcrumbWidget $widget, Item $itemModel)
     {
         $prefix = 'bc'; //TODO: Hacerlo parametrizable
-        $urls = array();
-        $trail = $widget->getTrailFor($itemModel);
-        $i=0;        
-        foreach ($trail as $trailItem) {
-            $urls[] =  $trailItem->getUrl()->getUrl();
-            $i++;
-        }
-        
-        $urls[] =  $itemModel->getUrl()->getUrl();
-        
-        $params[$prefix . '.url'] = json_encode($urls);
-        
-        $location = new UrlBasedLocation($itemModel->getUrl()->getUrl(), $params);
 
-        /*
-         * Si el UrlGenerator no está definido entonces tomar la url 
-         * directamente del UrlBasedLocation.  
-         */
-        if ($this->getUrlGenerator() !== null) 
-            return $this->getUrlGenerator()->generate($location);
-        else
-            return $location->getUrl();
+        $params = array();
+        $params[$prefix . '_url'] = $this->getViewStateForItem($widget, $itemModel);
+        
+        $location = new RouteBasedLocation($itemModel->getWebLocation()->getName(), array_merge($itemModel->getWebLocation()->getParameters(), $params));
+
+        return $this->getUrlGenerator()->generate($location);
     }
     
 }

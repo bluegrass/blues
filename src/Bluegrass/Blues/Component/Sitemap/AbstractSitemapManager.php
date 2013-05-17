@@ -34,6 +34,9 @@ abstract class AbstractSitemapManager implements SitemapManagerInterface
         $routeName = $request->get('_route');
         $routeParameters = $request->get('_route_params');
         
+        //Agregar los parámetros http del requerimiento actual a la WebLocation.
+        $routeParameters = array_merge($routeParameters, $request->query->all());
+        
         $location = new RouteBasedLocation($routeName, $routeParameters);
 
         $it = new RouteSitemapNodeFilterIterator($this->getSitemap()->getIterator(), $location);
@@ -44,7 +47,7 @@ abstract class AbstractSitemapManager implements SitemapManagerInterface
             throw new \Exception("Se encontró mas de un nodo en el sitemap que coincide con el requerimiento HTTP.");
         
         if ($nodes->count() == 0)
-            return null;
+            throw new \Exception("No se encontró ningun nodo en el sitemap que coincida con el requerimiento actual.");
         else
             return $nodes[0];
         

@@ -15,35 +15,63 @@ class BreadcrumbViewModelBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $model = new BreadcrumbModel();
         
-        $url = $this->getMockBuilder('Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlBasedLocation')
+        $url = $this->getMockBuilder('Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation')
                 ->disableOriginalConstructor()->getMock();
         $url->expects($this->any())
-                ->method('getUrl')
-                ->will($this->returnValue('root_url'));                
-        $model->add(new Item('root', $url));
+                ->method('getParameters')
+                ->will($this->returnValue(array()));
+        $model->add(new Item('root', 'root', $url));
         
-        $url = $this->getMockBuilder('Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlBasedLocation')
+        $url = $this->getMockBuilder('Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation')
                 ->disableOriginalConstructor()->getMock();        
         $url->expects($this->any())
-                ->method('getUrl')
-                ->will($this->returnValue('node_1_url?param1=param1_value'));                
-        $model->add(new Item('node_1', $url));
+                ->method('getParameters')
+                ->will($this->returnValue(array('param1' => 'param1_value')));                
+        $model->add(new Item('node_1', 'node_1', $url));
         
-        $url = $this->getMockBuilder('Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlBasedLocation')
+        $url = $this->getMockBuilder('Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation')
                 ->disableOriginalConstructor()->getMock();
         $url->expects($this->any())
-                ->method('getUrl')
-                ->will($this->returnValue('node_2_url?param1=param1_value&param2=param2_value'));                
-        $model->add(new Item('node_2', $url));
+                ->method('getParameters')
+                ->will($this->returnValue(array('param1' => 'param1_value', 'param2' => 'param2_value')));                
+        $model->add(new Item('node_2', 'node_2', $url));
         
         return new BreadcrumbWidget($model);
     }
     
+    protected function createUrlGeneratorMock()
+    {
+        $result = $this->getMock('Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGeneratorInterface');
+        $result->expects($this->any())
+                ->method('generate')
+                ->will(
+                    $this->returnCallback(
+                        function($location) {                        
+                            return array(
+                                'route' => $location->getName(),
+                                'params' => $location->getParameters()
+                            );                            
+                        }
+                    )                        
+                );
+        
+        return $result;
+    }
     
     protected function createViewModelBuilder()
     {
-        return new BreadcrumbViewModelBuilder();
+        return new BreadcrumbViewModelBuilder($this->createUrlGeneratorMock());
     }
+    
+    protected function encodeViewState($viewState)
+    {
+        return base64_encode(gzcompress(json_encode($viewState, JSON_FORCE_OBJECT)));
+    }
+
+    protected function decodeViewState($viewState)
+    {
+        return json_decode(gzuncompress(base64_decode($viewState)), true);
+    }    
     
     public function testBuild()
     {
@@ -70,30 +98,37 @@ class BreadcrumbViewModelBuilderTest extends \PHPUnit_Framework_TestCase
         );        
         
         $i = 0;
-        $location = new UrlBasedLocation($items[$i]->get('url'));
-        $params = $location->getParameters();        
-        $expectedUrlBreadcrumbState = array('root_url');
-        $this->assertItemUrlParameters($i, array('bc.url' => json_encode($expectedUrlBreadcrumbState)), $params);                               
-        $this->assertItemUrlBreadcrumbState($i, $expectedUrlBreadcrumbState, json_decode($params['bc.url']));
+        $location = $items[$i]->get('url');
+        $params = $location['params'];
+        $expectedUrlBreadcrumbState = array(array('name' => 'root', 'params' => array()));
+        $this->assertItemUrlParameters($i, array('bc_url' => $this->encodeViewState($expectedUrlBreadcrumbState)), $params);
+        $this->assertItemUrlBreadcrumbState($i, $expectedUrlBreadcrumbState, $this->decodeViewState($params['bc_url']));
         
         $i = 1;
-        $location = new UrlBasedLocation($items[$i]->get('url'));
-        $params = $location->getParameters();        
-        $expectedUrlBreadcrumbState = array('root_url', 'node_1_url?param1=param1_value');
-        $this->assertItemUrlParameters($i, array('param1' => 'param1_value', 'bc.url' => json_encode($expectedUrlBreadcrumbState)), $params);
-        $this->assertItemUrlBreadcrumbState($i, $expectedUrlBreadcrumbState, json_decode($params['bc.url']));
+        $location = $items[$i]->get('url');
+        $params = $location['params'];
+        $expectedUrlBreadcrumbState = array(
+            array('name' => 'root', 'params' => array()), 
+            array('name' => 'node_1', 'params' => array('param1' => 'param1_value'))
+        );
+        $this->assertItemUrlParameters($i, array('param1' => 'param1_value', 'bc_url' => $this->encodeViewState($expectedUrlBreadcrumbState)), $params);
+        $this->assertItemUrlBreadcrumbState($i, $expectedUrlBreadcrumbState, $this->decodeViewState($params['bc_url']));
 
         $i = 2;
-        $location = new UrlBasedLocation($items[$i]->get('url'));
-        $params = $location->getParameters();                
-        $expectedUrlBreadcrumbState = array('root_url', 'node_1_url?param1=param1_value', 'node_2_url?param1=param1_value&param2=param2_value');
-        $this->assertItemUrlParameters($i, array('param1' => 'param1_value','param2' => 'param2_value', 'bc.url' => json_encode($expectedUrlBreadcrumbState)), $params);
-        $this->assertItemUrlBreadcrumbState($i, $expectedUrlBreadcrumbState, json_decode($params['bc.url']));
+        $location = $items[$i]->get('url');
+        $params = $location['params'];
+        $expectedUrlBreadcrumbState = array(
+            array('name' => 'root', 'params' => array()), 
+            array('name' => 'node_1', 'params' => array('param1' => 'param1_value')),
+            array('name' => 'node_2', 'params' => array('param1' => 'param1_value', 'param2' => 'param2_value'))
+        );        
+        $this->assertItemUrlParameters($i, array('param1' => 'param1_value','param2' => 'param2_value', 'bc_url' => $this->encodeViewState($expectedUrlBreadcrumbState)), $params);
+        $this->assertItemUrlBreadcrumbState($i, $expectedUrlBreadcrumbState, $this->decodeViewState($params['bc_url']));
         
     }
     
-    protected function assertItemUrlBreadcrumbState($itemIndex, array $expected, $state)
-    {
+    protected function assertItemUrlBreadcrumbState($itemIndex, array $expected, array $state)
+    {   
         $this->assertEquals(
             count($expected),
             count($state),
@@ -104,13 +139,14 @@ class BreadcrumbViewModelBuilderTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(
                 $value,
                 $state[$key],
-                "Se esperaba que estado del breadcrumb asociado a la url del item de indice $itemIndex tenga un elemento '$key' con valor '$value'."
+                "Se esperaba que estado del breadcrumb asociado a la url del item de indice $itemIndex tenga un elemento '$key' con valor '" . json_encode($value) . "'."
             );
         }    
     }
     
     protected function assertItemUrlParameters($itemIndex, array $expected, $params)
-    {
+    {        
+        
         $this->assertEquals(
             count($expected),
             count($params),
@@ -124,15 +160,15 @@ class BreadcrumbViewModelBuilderTest extends \PHPUnit_Framework_TestCase
             );        
         }
         
-        //Comprobar que exista específicamente la clave bc.url
+        //Comprobar que exista específicamente la clave bc_url
         $this->assertTrue(
-            isset($params['bc.url']),
-            "Se esperaba que el item de indice $itemIndex de la vista tenga una url con el parámetro 'bc.url'."
+            isset($params['bc_url']),
+            "Se esperaba que el item de indice $itemIndex de la vista tenga una url con el parámetro 'bc_url'."
         );                
         
         $this->assertTrue(
-            is_array(json_decode($params['bc.url'])),
-            "Se esperaba que el parametro 'bc.url' de la url del item de indice $itemIndex contenga un arreglo codificado en json."
+            is_array((array)json_decode($params['bc_url'])),
+            "Se esperaba que el parametro 'bc_url' de la url del item de indice $itemIndex contenga un arreglo codificado en json."
         );                
         
     }

@@ -13,7 +13,7 @@ class SitemapManagerTest extends \PHPUnit_Framework_TestCase
         
         $request = new Request();
         $request->attributes->set('_route', 'node_2');
-        $request->attributes->set('_route_params', array('param_1' => 'param_1_value'));
+        $request->attributes->set('_route_params', array('param_1' => 'param_1_value', 'param_2' => 'param_2_value'));
         
         $node = $manager->getCurrentSitemapNode($request);
         
