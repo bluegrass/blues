@@ -2,30 +2,53 @@
 
 namespace Bluegrass\Blues\Component\Breadcrumb\Model;
 
+use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+
 
 class Item
 {
+    private $name;
     private $title;
-    private $url;
+    private $webLocation;
     
-    public function __construct($title, $url)
+    public function __construct($name, $title, RouteBasedLocation $location)
     {
-        $this->title = $title;
-        $this->setUrl($url);
+        $this->setName($name);
+        $this->setTitle($title);
+        $this->setWebLocation($location);
     }    
-
+    
+    protected function setName($value)
+    {
+        $this->name = $value;
+    }
+    
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    protected function setTitle($value)
+    {
+        $this->title = $value;
+    }
+    
     public function getTitle()
     {
         return $this->title;
     }
 
-    public function setUrl($value)
+    public function setWebLocation(RouteBasedLocation $value)
     {
-        $this->url = $value;
+        $this->webLocation = $value;
     }
-    
-    public function getUrl()
+
+    /**
+     * 
+     * @return Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation
+     */
+    public function getWebLocation()
     {
-        return $this->url;
+        return $this->webLocation;
     }    
 }

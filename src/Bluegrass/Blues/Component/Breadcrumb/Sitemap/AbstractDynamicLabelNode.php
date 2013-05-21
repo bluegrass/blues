@@ -33,6 +33,11 @@ abstract class AbstractDynamicLabelNode implements DynamicLabelNodeInterface
         return $this->node;
     }
     
+    public function getName()
+    {
+        return $this->getNode()->getName();
+    }
+    
     public function getLocation()
     {
         return $this->getNode()->getLocation();

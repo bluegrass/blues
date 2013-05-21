@@ -11,6 +11,7 @@ interface NodeInterface
 {
     function getLocation();
     function isNavigable();
+    function getName();
     function getLabel();
     function getChildren();
     function setParent(Node $value);
