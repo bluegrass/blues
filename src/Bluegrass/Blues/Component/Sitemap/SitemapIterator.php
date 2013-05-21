@@ -72,5 +72,4 @@ class SitemapIterator implements \RecursiveIterator
     {
         return $this->current()->hasChildren();
     }
-
 }

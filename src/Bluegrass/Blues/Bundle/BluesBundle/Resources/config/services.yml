@@ -1,16 +1,9 @@
 parameters:
     twig.extension.viewstate.class: Bluegrass\Blues\Bundle\BluesBundle\Extension\Twig\ViewStateExtension
     twig.extension.weblocation.class: Bluegrass\Blues\Bundle\BluesBundle\Extension\Twig\WebLocationExtension
-    twig.extension.bluegrass.blues.menu.class: Bluegrass\Blues\Bridge\Twig\Extension\MenuExtension
     bluegrass.blues.web.location.urlgenerator.class: Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGenerator  
     
-services:
-  
-    twig.extension.bluegrass.blues.menu:
-        class: %twig.extension.bluegrass.blues.menu.class%
-        arguments:     []
-        tags:
-            - { name: twig.extension }
+services:  
   
     twig.extension.viewstate:
         class: %twig.extension.viewstate.class%

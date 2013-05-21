@@ -1,0 +1,10 @@
+parameters:
+    twig.extension.bluegrass.blues.widget.class: Bluegrass\Blues\Bridge\Twig\Extension\WidgetExtension  
+
+services:
+  
+    twig.extension.bluegrass.blues.widget:
+        class: %twig.extension.bluegrass.blues.widget.class%
+        arguments:     []
+        tags:
+            - { name: twig.extension }

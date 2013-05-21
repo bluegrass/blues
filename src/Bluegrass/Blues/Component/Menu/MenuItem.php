@@ -4,7 +4,7 @@ namespace Bluegrass\Blues\Component\Menu;
 
 use \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
 
-class MenuItem
+class MenuItem implements MenuItemInterface
 {
     private $parent;
     private $children;

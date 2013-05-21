@@ -14,8 +14,7 @@ abstract class AbstractMenuManager implements MenuManagerInterface
     public function __construct( SitemapManagerInterface $sitemapManager )
     {
         $this->setSitemapManager($sitemapManager);        
-        $this->setMenu($this->buildMenu());                
-
+        $this->setMenu($this->buildMenu());
     }
     
     /**
@@ -34,14 +33,18 @@ abstract class AbstractMenuManager implements MenuManagerInterface
 
     /**
      * 
-     * @return MenuItem
+     * @return Menu
      */
     public function getMenu()
     {
         return $this->menu;
     }
 
-    public function setMenu(MenuItem $menu)
+    /**
+     * 
+     * @param \Bluegrass\Blues\Component\Menu\Menu $menu
+     */
+    public function setMenu(Menu $menu)
     {
         $this->menu = $menu;
     }    
@@ -75,20 +78,35 @@ abstract class AbstractMenuManager implements MenuManagerInterface
         }
     }
     
-    function buildMenuFromSitemap( )
+    /**
+     * 
+     * @return \Bluegrass\Blues\Component\Menu\Menu
+     */
+    function buildMenuFromSitemap( $skipRoot = false )
     {
-        $sitemapManager = $this->getSitemapManager();
-                
-        $it = $sitemapManager->getSitemap()->getIterator();
-        foreach ( $it as $node ) { 
+        $it = $this->getSitemapManager()->getSitemap()->getIterator();
+        
+        if( $skipRoot ){            
+            $it = $it ->getChildren();    
+        }        
+        
+        $menu = new Menu();
+        
+        foreach ( $it as $childNode ) { 
             
-            $menu = new MenuItem( $node->getName(), $node->getLabel(), $node->getLocation() );
-            $this->buildMenuItemFromSitemapNode( $menu, $node );
+            if( $childNode->isNavigable() ){
+                $menuItem = new MenuItem( $childNode->getName(), $childNode->getLabel(), $childNode->getLocation() );
+                $this->buildMenuItemFromSitemapNode( $menuItem, $childNode );
             
+                $menu->addChild($menuItem);
+            }
         }
         return $menu;                
     }
     
+    /**
+     * @return \Bluegrass\Blues\Component\Menu\Menu
+     */
     protected abstract function buildMenu();
     
 }

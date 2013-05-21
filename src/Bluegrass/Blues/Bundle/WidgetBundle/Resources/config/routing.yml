@@ -1,0 +1,8 @@
+
+bluegrass_blues_filterablemenu_filter:
+    path:      /bluegrass/blues/filterablemenu/filter/{filterPattern}
+    defaults:  { _controller: bluegrass.blues.filterable_menu.controller:filterAction, filterPattern: '' }
+    
+#bluegrass.blues.filterable_menu.controller:
+#    path:   /
+#    defaults:  { _controller: bluegrass.blues.filterable_menu.controller:indexAction }

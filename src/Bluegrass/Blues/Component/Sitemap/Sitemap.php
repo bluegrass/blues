@@ -36,6 +36,10 @@ class Sitemap implements \IteratorAggregate
         return $this->root;
     }
 
+    /**
+     * 
+     * @return SitemapIterator
+     */
     public function getIterator() 
     {
         $nodes = new \ArrayObject();        
