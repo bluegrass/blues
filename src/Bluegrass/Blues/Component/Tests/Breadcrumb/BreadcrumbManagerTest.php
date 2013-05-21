@@ -134,7 +134,8 @@ class BreadcrumbManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function createRequestMockWithoutViewState()
     {
-        $request = $this->getMock('\Symfony\Component\HttpFoundation\Request');
+        //$request = $this->getMockBuilder('\Symfony\Component\HttpFoundation\Request')->disableOriginalConstructor()->getMock();
+        $request = Request::create('');
         $request->query = new ParameterBag(array(
             'param2' => 'param2_value'
         ));
@@ -151,7 +152,7 @@ class BreadcrumbManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function createRequestMockWithIncorrectViewState()
     {
-        $request = $this->getMock('\Symfony\Component\HttpFoundation\Request');
+        $request = Request::create('');
         $request->query = new ParameterBag(array(
             'param2' => 'param2_value',
             'bc_url' => $this->encodeViewState(array(array('name' => 'node_1', 'params' => array('param1' => 'param1_value_modified'))))
@@ -169,7 +170,7 @@ class BreadcrumbManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function createRequestMockWithValidViewState()
     {
-        $request = $this->getMock('\Symfony\Component\HttpFoundation\Request');
+        $request = Request::create('');
         $request->query = new ParameterBag(array(
             'param2' => 'param2_value',
             'bc_url' => $this->encodeViewState(array(array('name' => 'root', 'params' => array()), array('name' => 'node_1', 'params' => array('param1' => 'param1_value_modified'))))
