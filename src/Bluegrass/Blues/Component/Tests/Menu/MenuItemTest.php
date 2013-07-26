@@ -4,7 +4,7 @@ namespace Bluegrass\Blues\Component\Tests\Menu;
 
 use Bluegrass\Blues\Component\Menu\MenuItem;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 
 class MenuItemTest extends \PHPUnit_Framework_TestCase
 {

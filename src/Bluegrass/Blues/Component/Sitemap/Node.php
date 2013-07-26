@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Sitemap;
 
-use \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use \Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 
 /**
  * Description of Node
@@ -43,7 +43,7 @@ class Node implements NodeInterface
     
     /**
      * 
-     * @param \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation $value
+     * @param RouteBasedLocation $value
      */
     protected function setLocation(RouteBasedLocation $value = null)
     {
@@ -55,7 +55,7 @@ class Node implements NodeInterface
     
     /**
      * 
-     * @return \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation
+     * @return RouteBasedLocation
      */
     public function getLocation()
     {

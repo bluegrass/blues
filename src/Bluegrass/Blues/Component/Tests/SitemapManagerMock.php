@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Tests;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 use Bluegrass\Blues\Component\Sitemap\AbstractSitemapManager;
 use Bluegrass\Blues\Component\Sitemap\Node;
 use Bluegrass\Blues\Component\Sitemap\Sitemap;

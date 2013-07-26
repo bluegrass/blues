@@ -2,18 +2,40 @@
 
 namespace Bluegrass\Blues\Component\DataSource;
 
-class ArrayDataSource implements IDataSource
+class ArrayDataSource implements DataSourceInterface, \Countable
 {
-    private $arrayData;
+    protected $arrayData;
+    protected $orderByDefinitions;
 
     public function __construct(array $data)
     {
         $this->arrayData = $data;
+        $this->orderByDefinitions = array();
+    }
+    
+    protected function sortData()
+    {
+        $sortableData = array();
+        
+        foreach ($this->arrayData as $key => $row) {
+            
+            foreach( $this->orderByDefinitions as $orderBy ){
+                $sortableData[ $orderBy['field']  ][ $key ] = $row[ $orderBy['field']  ];
+            }
+        }        
+        
+        if ( count( $this->orderByDefinitions ) == 1){
+            array_multisort( $sortableData[ $this->orderByDefinitions[0]['field']  ], $this->orderByDefinitions[0]['dir'], $this->arrayData );
+        }elseif( count( $this->orderByDefinitions ) == 2 ) {
+            array_multisort( $sortableData[ $this->orderByDefinitions[0]['field']  ], $this->orderByDefinitions[0]['dir'], $sortableData[$this->orderByDefinitions[1]['field']  ], $this->orderByDefinitions[1]['dir'], $this->arrayData );
+        }        
     }
 
     public function getData($page = 1, $rowsPerPage = null)
-    {
-        $count = $this->getCount();
+    {    
+        $this->sortData();
+        
+        $count = $this->count();
 
         if (!$rowsPerPage) {
             $rowsPerPage = $count;
@@ -33,8 +55,18 @@ class ArrayDataSource implements IDataSource
         return $result;
     }
 
-    public function getCount()
+    public function count()
     {
         return count($this->arrayData);
+    }
+    
+    public function getIterator()
+    {
+        return new \ArrayIterator( $this->arrayData );
+    }
+    
+    public function addOrderBy( $field, $dir )
+    {
+        $this->orderByDefinitions[] = array( 'field' => $field, 'dir' => $dir );
     }
 }

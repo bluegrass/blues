@@ -3,7 +3,7 @@
 namespace Bluegrass\Blues\Component\Sitemap;
 
 use Symfony\Component\HttpFoundation\Request;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 
 abstract class AbstractSitemapManager implements SitemapManagerInterface
 {

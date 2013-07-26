@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Menu;
 
-use \Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use \Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 
 class MenuItem implements MenuItemInterface
 {

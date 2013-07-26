@@ -4,7 +4,7 @@ namespace Bluegrass\Blues\Component\Tests\Sitemap;
 
 use Bluegrass\Blues\Component\Sitemap\Node;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 
 class NodeTest extends \PHPUnit_Framework_TestCase
 {

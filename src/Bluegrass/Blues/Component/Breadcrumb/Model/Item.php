@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Breadcrumb\Model;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 
 
 class Item
@@ -45,7 +45,7 @@ class Item
 
     /**
      * 
-     * @return Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation
+     * @return Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation
      */
     public function getWebLocation()
     {

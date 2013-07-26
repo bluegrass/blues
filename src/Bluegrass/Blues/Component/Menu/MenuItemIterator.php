@@ -6,7 +6,7 @@ namespace Bluegrass\Blues\Component\Menu;
  * Description of MenuItemIterator
  *
  */
-class MenuItemIterator implements \RecursiveIterator
+class MenuItemIterator implements \RecursiveIterator, MenuItemIteratorInterface
 {
     private $nodeList;
     private $position;    

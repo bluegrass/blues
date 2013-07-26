@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Sitemap;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 
 /**
  * Interfaz que debe implementar un nodo de un Sitemap.

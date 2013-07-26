@@ -2,8 +2,8 @@
 
 namespace Bluegrass\Blues\Component\Breadcrumb;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGeneratorInterface;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\UrlGeneratorInterface;
 use Bluegrass\Blues\Component\Breadcrumb\BreadcrumbManagerInterface;
 use Bluegrass\Blues\Component\Breadcrumb\Model\Breadcrumb;
 use Bluegrass\Blues\Component\Breadcrumb\Model\Item;

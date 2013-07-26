@@ -2,10 +2,10 @@
 
 namespace Bluegrass\Blues\Component\Tests;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlBasedLocation;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGeneratorInterface;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\UrlBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\UrlGeneratorInterface;
+use Bluegrass\Blues\Component\Model\Web\Location\WebLocation;
 use Exception;
 
 class UrlGeneratorMock implements UrlGeneratorInterface

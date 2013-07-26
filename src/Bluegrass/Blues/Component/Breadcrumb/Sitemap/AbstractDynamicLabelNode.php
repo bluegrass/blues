@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Component\Breadcrumb\Sitemap;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 use Bluegrass\Blues\Component\Breadcrumb\Sitemap\DynamicLabelNodeInterface;
 use Bluegrass\Blues\Component\Sitemap\Node;
 use Bluegrass\Blues\Component\Sitemap\NodeInterface;

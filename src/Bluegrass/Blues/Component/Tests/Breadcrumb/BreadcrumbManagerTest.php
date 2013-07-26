@@ -4,7 +4,7 @@ use Bluegrass\Blues\Component\Breadcrumb\DefaultBreadcrumbManager;
 use Bluegrass\Blues\Component\Tests\SitemapManagerMock;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\RouteBasedLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\RouteBasedLocation;
 
 /**
  *
@@ -33,7 +33,7 @@ class BreadcrumbManagerTest extends \PHPUnit_Framework_TestCase
     
     protected function createUrlGeneratorMock()
     {
-        $urlGenerator = $this->getMock('Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGeneratorInterface');
+        $urlGenerator = $this->getMock('Bluegrass\Blues\Component\Model\Web\Location\UrlGeneratorInterface');
         $urlGenerator->expects($this->any())
                 ->method('generate')
                 ->will($this->returnCallback(
