@@ -2,8 +2,8 @@
 
 namespace Bluegrass\Blues\Bundle\BluesBundle\Extension\Twig;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\UrlGeneratorInterface;
+use Bluegrass\Blues\Component\Model\Web\Location\WebLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\UrlGeneratorInterface;
 
 class WebLocationExtension extends \Twig_Extension
 {

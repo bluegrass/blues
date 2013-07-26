@@ -2,7 +2,7 @@
 
 namespace Bluegrass\Blues\Bundle\BreadcrumbBundle\Model;
 
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\WebLocation;
 
 class Item
 {

@@ -5,7 +5,7 @@ namespace Bluegrass\Blues\Bundle\BluesBundle\Controller;
 use Bluegrass\Blues\Bundle\BreadcrumbBundle\Model\Item;
 use Bluegrass\Blues\Bundle\BreadcrumbBundle\Model\Breadcrumb;
 use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\View\ViewState;
-use Bluegrass\Blues\Bundle\BluesBundle\Model\Web\Location\WebLocation;
+use Bluegrass\Blues\Component\Model\Web\Location\WebLocation;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;

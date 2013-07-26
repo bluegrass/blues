@@ -1,0 +1,16 @@
+imports:
+    - { resource: "string_column/services.yml" }
+    - { resource: "money_column/services.yml" }
+    - { resource: "date_column/services.yml" }
+    
+parameters:
+    
+    # Factory
+    bluegrass.widget.grid.column.builder.factory.class: Bluegrass\Blues\Component\Widget\Grid\Column\Builder\Factory\GridWidgetColumnBuilderFactory
+    
+services:
+  
+    bluegrass.widget.grid.column.builder.factory:
+        class: %bluegrass.widget.grid.column.builder.factory.class%
+        calls:
+            - [setContainer, ["@service_container"]]

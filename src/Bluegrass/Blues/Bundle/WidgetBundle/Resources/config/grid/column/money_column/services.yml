@@ -1,0 +1,22 @@
+parameters:
+  
+    bluegrass.widget.grid.column.money.builder.class: Bluegrass\Blues\Component\Widget\Grid\Column\Builder\GridWidgetMoneyColumnBuilder
+    
+    bluegrass.widget.grid.column.money.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\Grid\View\Column\MoneyColumn\KendoGridMoneyColumnViewModelBuilder
+    bluegrass.widget.grid.column.money.cellviewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\Grid\View\Column\MoneyColumn\KendoGridMoneyColumnCellViewModelBuilder
+
+services:
+  
+    # String Column            
+    bluegrass.widget.grid.column.money.viewmodelbuilder:
+        class: %bluegrass.widget.grid.column.money.viewmodelbuilder.class%
+        arguments:     []
+
+    bluegrass.widget.grid.column.money.cellviewmodelbuilder:
+        class: %bluegrass.widget.grid.column.money.cellviewmodelbuilder.class%
+        arguments:     []
+
+    bluegrass.widget.grid.column.money.builder:
+        class: %bluegrass.widget.grid.column.money.builder.class%
+        arguments:     ["@bluegrass.widget.grid.column.money.viewmodelbuilder", "@bluegrass.widget.grid.column.money.cellviewmodelbuilder"]
+

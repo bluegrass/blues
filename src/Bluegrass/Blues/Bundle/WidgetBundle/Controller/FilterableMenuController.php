@@ -2,13 +2,13 @@
 
 namespace Bluegrass\Blues\Bundle\WidgetBundle\Controller;
 
-use Bluegrass\Blues\Component\Widgets\FilterableMenu\FilterableMenuWidget;
 use Bluegrass\Blues\Component\Menu\MenuManagerInterface;
 
-use Bluegrass\Blues\Component\Widgets\Menu\MenuWidget;
+use Bluegrass\Blues\Component\Widget\Menu\Model\MenuWidgetModel;
+use Bluegrass\Blues\Component\Widget\FilterableMenu\Model\FilterableMenuWidgetModel;
 
 use Bluegrass\Blues\Bundle\WidgetBundle\Widgets\Menu\FilterableMenu\Controller\FilterableMenuController as Controller;
-use Bluegrass\Blues\Component\Widgets\FilterableMenu\Model\FilterableMenuWidgetModel;
+
 
 class FilterableMenuController extends Controller
 {
@@ -22,10 +22,11 @@ class FilterableMenuController extends Controller
     {
         $menu = $this->getMenuManager()->getMenu();
         
-        $filterableMenuWidget = new FilterableMenuWidget( new FilterableMenuWidgetModel( $menu ) );        
-        $filterableMenuWidget->filter( $filterPattern );
+        $filterableMenuWidget = $this->get('bluegrass.widget.filterablemenu.builder')->withModel( new FilterableMenuWidgetModel( $menu->getIterator() ) )->build();
+        $filterableMenuWidget->filter( $filterPattern );        
         
-        $menuWidget = new MenuWidget( $filterableMenuWidget->getModel() );        
-        return $this->render('BluegrassBluesWidgetBundle:FilterableMenu:filter.html.twig', array( 'menu' => $menuWidget->buildView() ));
+        $menuWidget = $this->get('bluegrass.widget.menu.builder')->withModel( new MenuWidgetModel( $filterableMenuWidget->getIterator() ) )->build();        
+        
+        return $this->render('BluegrassBluesWidgetBundle:FilterableMenu:filter.html.twig', array( 'menu' => $menuWidget->buildViewModel() ));
     }
 }

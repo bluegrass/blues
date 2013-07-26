@@ -1,0 +1,22 @@
+parameters:
+  
+    bluegrass.widget.grid.column.string.builder.class: Bluegrass\Blues\Component\Widget\Grid\Column\Builder\GridWidgetStringColumnBuilder
+    
+    bluegrass.widget.grid.column.string.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\Grid\View\Column\StringColumn\KendoGridStringColumnViewModelBuilder
+    bluegrass.widget.grid.column.string.cellviewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\Grid\View\Column\StringColumn\KendoGridStringColumnCellViewModelBuilder
+
+services:
+  
+    # String Column            
+    bluegrass.widget.grid.column.string.viewmodelbuilder:
+        class: %bluegrass.widget.grid.column.string.viewmodelbuilder.class%
+        arguments:     []
+
+    bluegrass.widget.grid.column.string.cellviewmodelbuilder:
+        class: %bluegrass.widget.grid.column.string.cellviewmodelbuilder.class%
+        arguments:     []
+
+    bluegrass.widget.grid.column.string.builder:
+        class: %bluegrass.widget.grid.column.string.builder.class%
+        arguments:     ["@bluegrass.widget.grid.column.string.viewmodelbuilder", "@bluegrass.widget.grid.column.string.cellviewmodelbuilder"]
+

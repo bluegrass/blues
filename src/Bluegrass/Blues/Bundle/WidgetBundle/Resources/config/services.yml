@@ -1,6 +1,12 @@
+imports:
+    - { resource: "grid/services.yml" }
+    - { resource: "ajaxgrid/services.yml" }    
+    - { resource: "menu/services.yml" }    
+    - { resource: "filterable_menu/services.yml" }    
+    
 parameters:
-    twig.extension.bluegrass.blues.widget.class: Bluegrass\Blues\Bridge\Twig\Extension\WidgetExtension  
-
+    twig.extension.bluegrass.blues.widget.class: Bluegrass\Blues\Bridge\Twig\Extension\Widget\WidgetExtension  
+    
 services:
   
     twig.extension.bluegrass.blues.widget:
@@ -8,3 +14,5 @@ services:
         arguments:     []
         tags:
             - { name: twig.extension }
+            
+            

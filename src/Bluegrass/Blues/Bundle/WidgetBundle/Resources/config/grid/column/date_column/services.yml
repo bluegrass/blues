@@ -1,0 +1,22 @@
+parameters:
+  
+    bluegrass.widget.grid.column.date.builder.class: Bluegrass\Blues\Component\Widget\Grid\Column\Builder\GridWidgetDateColumnBuilder
+    
+    bluegrass.widget.grid.column.date.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\Grid\View\Column\DateColumn\KendoGridDateColumnViewModelBuilder
+    bluegrass.widget.grid.column.date.cellviewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\Grid\View\Column\DateColumn\KendoGridDateColumnCellViewModelBuilder
+
+services:
+  
+    # String Column            
+    bluegrass.widget.grid.column.date.viewmodelbuilder:
+        class: %bluegrass.widget.grid.column.date.viewmodelbuilder.class%
+        arguments:     []
+
+    bluegrass.widget.grid.column.date.cellviewmodelbuilder:
+        class: %bluegrass.widget.grid.column.date.cellviewmodelbuilder.class%
+        arguments:     []
+
+    bluegrass.widget.grid.column.date.builder:
+        class: %bluegrass.widget.grid.column.date.builder.class%
+        arguments:     ["@bluegrass.widget.grid.column.date.viewmodelbuilder", "@bluegrass.widget.grid.column.date.cellviewmodelbuilder"]
+

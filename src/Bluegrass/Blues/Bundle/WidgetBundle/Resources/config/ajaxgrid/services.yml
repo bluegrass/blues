@@ -1,0 +1,32 @@
+parameters:
+    
+    twig.extension.bluegrass.blues.widget.ajaxgrid.class: Bluegrass\Blues\Bridge\Twig\Extension\Widget\AjaxGrid\AjaxGridWidgetExtension  
+    
+    # Builders
+    bluegrass.widget.ajaxgrid.builder.class: Bluegrass\Blues\Component\Widget\AjaxGrid\Builder\AjaxGridWidgetBuilder
+    
+    # KENDO
+    bluegrass.widget.ajaxgrid.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\AjaxGrid\View\KendoAjaxGridViewModelBuilder    
+    bluegrass.widget.ajaxgrid.contentviewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\AjaxGrid\View\KendoAjaxGridContentViewModelBuilder    
+
+services:
+  
+    bluegrass.widget.ajaxgrid.viewmodelbuilder:
+        class: %bluegrass.widget.ajaxgrid.viewmodelbuilder.class%
+        arguments:     ["@bluegrass.blues.web.location.urlgenerator"]
+
+    bluegrass.widget.ajaxgrid.contentviewmodelbuilder:
+        class: %bluegrass.widget.ajaxgrid.contentviewmodelbuilder.class%
+        arguments:     []
+    
+    bluegrass.widget.ajaxgrid.builder:
+        class: %bluegrass.widget.ajaxgrid.builder.class%
+        arguments:     ["@bluegrass.widget.grid.builder","@bluegrass.widget.ajaxgrid.viewmodelbuilder", "@bluegrass.widget.ajaxgrid.contentviewmodelbuilder"]
+          
+    twig.extension.bluegrass.blues.widget.ajaxgrid:
+        class: %twig.extension.bluegrass.blues.widget.ajaxgrid.class%
+        arguments:     []
+        tags:
+            - { name: twig.extension }
+            
+        

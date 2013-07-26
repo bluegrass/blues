@@ -1,0 +1,23 @@
+imports:
+    - { resource: "column/services.yml" }
+
+parameters:
+    
+    # Builders
+    bluegrass.widget.grid.builder.class: Bluegrass\Blues\Component\Widget\Grid\Builder\GridWidgetBuilder
+    
+    # KENDO
+    bluegrass.widget.grid.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\Grid\View\KendoGridViewModelBuilder
+
+    # HTML
+#    bluegrass.widget.grid.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\HTML\Grid\View\HTMLGridViewModelBuilder
+
+services:
+  
+    bluegrass.widget.grid.viewmodelbuilder:
+        class: %bluegrass.widget.grid.viewmodelbuilder.class%
+        arguments:     []
+  
+    bluegrass.widget.grid.builder:
+        class: %bluegrass.widget.grid.builder.class%
+        arguments:     ["@bluegrass.widget.grid.viewmodelbuilder", "@bluegrass.widget.grid.column.builder.factory"]

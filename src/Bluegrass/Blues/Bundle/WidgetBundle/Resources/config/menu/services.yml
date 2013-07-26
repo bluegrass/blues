@@ -1,0 +1,18 @@
+parameters:
+    bluegrass.widget.menu.builder.class: Bluegrass\Blues\Component\Widget\Menu\Builder\MenuWidgetBuilder
+    
+    # KENDO
+    bluegrass.widget.menu.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\Menu\View\KendoMenuViewModelBuilder
+
+    # HTML
+#    bluegrass.widget.menu.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\HTML\Menu\View\HTMLMenuViewModelBuilder
+
+services:
+  
+    bluegrass.widget.menu.viewmodelbuilder:
+        class: %bluegrass.widget.menu.viewmodelbuilder.class%
+        arguments:     []
+
+    bluegrass.widget.menu.builder:
+        class: %bluegrass.widget.menu.builder.class%
+        arguments:     ["@bluegrass.widget.menu.viewmodelbuilder"]

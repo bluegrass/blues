@@ -1,0 +1,19 @@
+parameters:
+
+    bluegrass.widget.filterablemenu.builder.class: Bluegrass\Blues\Component\Widget\FilterableMenu\Builder\FilterableMenuWidgetBuilder
+    
+    # KENDO
+    bluegrass.widget.filterablemenu.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\Kendo\FilterableMenu\View\KendoFilterableMenuViewModelBuilder
+
+    # HTML
+#    bluegrass.widget.filterablemenu.viewmodelbuilder.class: Bluegrass\Blues\Bridge\Widget\HTML\FilterableMenu\View\HTMLFilterableMenuViewModelBuilder
+
+services:
+  
+    bluegrass.widget.filterablemenu.viewmodelbuilder:
+        class: %bluegrass.widget.filterablemenu.viewmodelbuilder.class%
+        arguments:     []
+
+    bluegrass.widget.filterablemenu.builder:
+        class: %bluegrass.widget.filterablemenu.builder.class%
+        arguments:     ["@bluegrass.widget.filterablemenu.viewmodelbuilder", "@bluegrass.widget.menu.builder"]

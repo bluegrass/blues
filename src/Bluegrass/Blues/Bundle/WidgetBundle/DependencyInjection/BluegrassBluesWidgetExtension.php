@@ -37,8 +37,11 @@ class BluegrassBluesWidgetExtension extends Extension implements PrependExtensio
             'assets' => array(
                 'bluegrassblueswidgetbundle_javascripts' => array(
                     'inputs' => array(
-                        '@BluegrassBluesWidgetBundle/Resources/public/js/Menu/initialize.js',
-                        '@BluegrassBluesWidgetBundle/Resources/public/js/FilterableMenu/initialize.js',
+                        '@BluegrassBluesWidgetBundle/Resources/public/js/Kendo/Menu/initialize.js',
+                        '@BluegrassBluesWidgetBundle/Resources/public/js/Kendo/FilterableMenu/initialize.js',
+                        '@BluegrassBluesWidgetBundle/Resources/public/js/Kendo/Grid/initialize.js',
+                        '@BluegrassBluesWidgetBundle/Resources/public/js/Kendo/AjaxGrid/initialize.js',
+                        '@BluegrassBluesWidgetBundle/Resources/public/js/HTML/FilterableMenu/initialize.js',
                         )
                     )                
                 )
