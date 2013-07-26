@@ -1,8 +1,8 @@
 <?php
 
-namespace Bluegrass\Blues\Bridge\Twig\Extension;
+namespace Bluegrass\Blues\Bridge\Twig\Extension\Widget;
 
-use Bluegrass\Blues\Component\Views\ViewModel;
+use Bluegrass\Blues\Component\Widget\View\WidgetViewModel;
 
 class WidgetExtension extends \Twig_Extension
 {
@@ -15,8 +15,8 @@ class WidgetExtension extends \Twig_Extension
     {
         $this->environment = $environment;
         
-        $menuExtensionReflection = new \ReflectionClass("Bluegrass\Blues\Bridge\Twig\Extension\WidgetExtension");
-        $menuExtensionReflectionDir = dirname($menuExtensionReflection->getFilename()).'/../Resources/views/Widget';        
+        $menuExtensionReflection = new \ReflectionClass("Bluegrass\Blues\Bridge\Twig\Extension\Widget\WidgetExtension");
+        $menuExtensionReflectionDir = dirname($menuExtensionReflection->getFilename()).'/../../Resources/views/Widget';        
         
         if (is_dir( $menuExtensionReflectionDir )) {
             $this->environment->getLoader()->addPath( $menuExtensionReflectionDir, "BluegrassBluesWidget");
@@ -35,11 +35,12 @@ class WidgetExtension extends \Twig_Extension
         );
     }
     
-    function renderBluegrassBluesWidget( ViewModel $view )
+    function renderBluegrassBluesWidget( WidgetViewModel $viewModel )
     {                    
-        $template = $this->environment->loadTemplate('@BluegrassBluesWidget/blocks.html.twig');
+        //$template = $this->environment->loadTemplate('@BluegrassBluesWidget/blocks.html.twig');
+        $template = $this->environment->loadTemplate( $viewModel->getTemplate() );
         
-        return $template->renderBlock( $view->get('blockName') , array( 'view' => $view ) );
+        return $template->renderBlock( $viewModel->getBlockName() , array( 'view' => $viewModel ) );
     }    
 }
 

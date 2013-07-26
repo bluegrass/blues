@@ -1,0 +1,123 @@
+{% block bluegrass_blues_menu_widget %}
+    {% macro bluegrass_blues_menuitem_render( menu ) %}             
+                        <li class='bluegrass_blues_widget_menu_menuitem {% if  menu.vars.current %}bluegrass_blues_widget_menu_menuitem_current{% endif %}' 
+                                id="bluegrass_blues_widget_menu_menuitem_{{ menu.vars.name }}">
+                                <a href="#">{{ menu.vars.label }}</a>
+                                
+                                {%  if menu.vars.children|length > 0 %}
+                                    <ul>
+                                    {% for submenu in menu.vars.children %}
+                                        {{ _self.bluegrass_blues_menuitem_render( submenu )  }}                                
+                                    {% endfor %}                                                                
+                                    </ul>
+                                {%  endif %}
+                        </li>
+    {% endmacro %}
+    
+    <menu class='bluegrass_blues_widget_menu bluegrass_blues_widget_kendo_menu'>
+    <ul>
+    {% for n in view.vars.items %}
+        {{ _self.bluegrass_blues_menuitem_render( n ) }}
+    {% endfor %}
+    </ul>            
+    </menu>            
+                        
+{% endblock %}
+
+{% block bluegrass_blues_filterablemenu_widget %}
+    {% spaceless %}
+    <span class='bluegrass_blues_widget_filterablemenu bluegrass_blues_widget_kendo_filterablemenu' data-filterablemenu-pattern-filter-url='{{ path('bluegrass_blues_filterablemenu_filter', { 'filterPattern' : '__PLACEHOLDER__' } ) }}' data-filterablemenu-default-url='{{ path('bluegrass_blues_filterablemenu_filter' ) }}'>
+        
+        <input type='text'  value=''>               
+
+        {{ bluegrass_blues_widget( view.vars.menuWidget ) }}
+        
+    </span>
+    {% endspaceless %}                    
+{% endblock %}
+
+{% block bluegrass_blues_grid_widget %}                     
+    {% spaceless %}                                                
+    {% autoescape false %}
+    
+    {# Armo el array para las columnas #}
+    {% set columnsJSON = [] %}
+
+    {% for column in view.vars.columns %}
+
+        {% set columnDefinition %}{% include column.vars.template with { 'column' : column.vars }  %}{% endset %}
+
+        {% set columnsJSON = columnsJSON|merge( [columnDefinition|replace({ "\n": ''}) ] )  %}
+
+    {% endfor %}
+                        
+    {# Armo el array para las filas #}
+    {% set dataJSON = [] %}
+    {% for row in view.vars.rows %}
+    
+            {% set columnDataJSON = [] %}
+    
+            {% for column in view.vars.columns %}                
+                {% set cellDefinition %}{% include row.cells[ column.vars.name ].vars.template with { 'cell' : row.cells[ column.vars.name ].vars }  %}{% endset %}
+                {% set columnDataJSON = columnDataJSON|merge( [ cellDefinition ] )  %}
+            {% endfor %}                
+                
+        {% set dataJSON = dataJSON|merge( [ '{' ~ columnDataJSON | join(',')  ~ '}' ] )  %}
+                        
+    {% endfor %}                        
+    <div class='bluegrass_blues_widget_grid bluegrass_blues_widget_kendo_grid' 
+                data-columns='[{{ columnsJSON | join(',') }}]' 
+                data-datasource='{ "data": [{{ dataJSON | join(',') }}]}' 
+                data-pagesize='{{ view.vars.pageSize }}'>
+    </div>
+    {% endautoescape %}
+    {% endspaceless %}                
+{% endblock %}
+                        
+{% block bluegrass_blues_ajaxgrid_widget %}                     
+    {% spaceless %}                                                
+    {% autoescape false %}
+    
+    {# Armo el array para las columnas #}
+    {% set columnsJSON = [] %}
+
+    {% for column in view.vars.columns %}
+
+        {% set columnDefinition %}{% include column.vars.template with { 'column' : column.vars }  %}{% endset %}
+
+        {% set columnsJSON = columnsJSON|merge( [columnDefinition|replace({ "\n": ''}) ] )  %}
+
+    {% endfor %}
+                        
+    <div class='bluegrass_blues_widget_ajaxgrid bluegrass_blues_widget_kendo_ajaxgrid' 
+                data-columns='[{{ columnsJSON | join(',') }}]' 
+                data-pagesize='{{ view.vars.pageSize }}' 
+                data-dataajaxrequesturl='{{ view.vars.dataAjaxRequestUrl }}'>
+    </div>
+    {% endautoescape %}
+    {% endspaceless %}                
+{% endblock %}
+                        
+{% block bluegrass_blues_widget_ajaxgrid_content %}                     
+    {% spaceless %}                                                
+    {% autoescape false %}
+    
+    {# Armo el array para las filas #}
+    {% set dataJSON = [] %}
+    {% for row in view.vars.rows %}
+    
+            {% set columnDataJSON = [] %}
+    
+            {% for column in view.vars.columns %}                
+                {% set cellDefinition %}{% include row.cells[ column.vars.name ].vars.template with { 'cell' : row.cells[ column.vars.name ].vars }  %}{% endset %}
+                {% set columnDataJSON = columnDataJSON|merge( [ cellDefinition ] )  %}
+            {% endfor %}                
+                
+        {% set dataJSON = dataJSON|merge( [ '{' ~ columnDataJSON | join(',')  ~ '}' ] )  %}
+                        
+    {% endfor %}                        
+
+    {"data": [{{ dataJSON | join(',') }}], "total": {{ view.vars.count }} }
+    {% endautoescape %}                        
+    {% endspaceless %}                
+{% endblock %}                        
